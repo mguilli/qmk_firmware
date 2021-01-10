@@ -24,9 +24,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EE_HANDS
 
 #undef RGBLED_NUM
-#define RGBLIGHT_ANIMATIONS
+#undef RGBLIGHT_ANIMATIONS
+#define RGBLIGHT_EFFECT_BREATHING
 #define RGBLED_NUM 12
 #define RGBLIGHT_HUE_STEP 8
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
+#define RGBLIGHT_SPLIT
+
 #define TAPPING_TOGGLE 3
+
+// Turn off RGB when host sleeps
+#define RGBLIGHT_SLEEP
+
+// Allow for RGB indication of enabled layer
+#define RGBLIGHT_LAYERS
+#define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF  // Use layers when RGB turned off

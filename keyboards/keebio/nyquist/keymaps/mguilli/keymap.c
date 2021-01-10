@@ -138,6 +138,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+// RGB indicator layers
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+  {0, 12, HSV_RED}  // Light all LEDs red
+);
+
+const rgblight_segment_t PROGMEM my_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+  {0, 12, HSV_GREEN}  // Light all LEDs green
+);
+
+const rgblight_segment_t PROGMEM my_raise_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+  {0, 12, HSV_PURPLE}  // Light all LEDs purple
+);
+
+const rgblight_segment_t PROGMEM my_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+  {0, 12, HSV_YELLOW}  // Light all LEDs yellow
+);
+
+// Define array of layers. Later layers take precedence
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+  my_capslock_layer,
+  my_lower_layer,
+  my_raise_layer,
+  my_adjust_layer
+);
+
+const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {40, 20, 10, 5};
+
+#ifdef RGBLIGHT_ENABLE
+void keyboard_post_init_user(void) {
+  // Enable the LED layers
+  rgblight_layers = my_rgb_layers;
+
+  // Set default RGB
+  rgblight_enable_noeeprom(); // Enables RGB, without saving settings
+  rgblight_sethsv_noeeprom(HSV_CYAN);
+  rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING);
+}
+#endif
+
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+  // Activate Adjust layer if both Lower and Raise layers are activated
+  state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+
+  // Enable and disable RGB layer
+  rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
+  rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
+  rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
+
+  return state;
+}
+
+bool led_update_user(led_t led_state) {
+  rgblight_set_layer_state(0, led_state.caps_lock);
+  return true;
 }
