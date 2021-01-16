@@ -7,27 +7,27 @@
 // entirely and just use numbers.
 #define _QWERTY 0
 #define _LOWER 1
-#define _RAISE 2
-#define _ADJUST 5
-#define _NAV 6
+#define _SYMBOL 2
+#define _NAV 5
+#define _ADJUST 6
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
-  RAISE,
+  SYMBOL,
   ADJUST,
   NAV,
 };
 
 #define LOWER TT(_LOWER)
-#define RAISE MO(_RAISE)
+#define NAV MO(_NAV)
 #define CTL_ESC LCTL_T(KC_ESC)
 #define CTL_SFT LCTL(KC_LSFT)
 #define CTL_UP LCTL(KC_UP)
 #define CTL_DOWN LCTL(KC_DOWN)
 #define CTL_LEFT LCTL(KC_LEFT)
 #define CTL_RGHT LCTL(KC_RGHT)
-#define SPC_NAV LT(_NAV, KC_SPC)
+#define SPC_SYM LT(_SYMBOL, KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |SftEnt|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |CtlSft| Alt  | OS  |Lower |SpcNav|SpcNav|Raise | Left | Down |  Up  |Right |
+ * | Ctrl |CtlSft| Alt  | OS   |Lower |SpcSym|SpcSym|  Nav | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT( \
@@ -49,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,    KC_Y,    KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC, \
   CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,  KC_G,    KC_H,    KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,    KC_N,    KC_M,  KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT, \
-  KC_LCTL, CTL_SFT, KC_LALT, KC_LGUI, LOWER, SPC_NAV, SPC_NAV, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
+  KC_LCTL, CTL_SFT, KC_LALT, KC_LGUI, LOWER, SPC_SYM, SPC_SYM, NAV, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
 /* Lower
@@ -73,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______,  _______,  _______,  _______, _______,  _______, KC_P0,   KC_P0,   KC_PDOT, KC_PENT, XXXXXXX \
 ),
 
-/* Raise
+/* Symbol
  * ,-----------------------------------------------------------------------------------.
  * | F11  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F12  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_RAISE] = LAYOUT( \
+[_SYMBOL] = LAYOUT( \
   KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12, \
   KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______, \
   _______, KC_EQL,  KC_UNDS, KC_LBRC, KC_LPRN, KC_LCBR, KC_RCBR, KC_RPRN, KC_RBRC, KC_MINS, KC_PLUS, KC_DQUO, \
@@ -94,9 +94,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
 ),
 
+/* Nav
+ * ,-----------------------------------------------------------------------------------.
+ * |CapLck|      |      |      |Alt+F4|      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |  ^Q  |  ^W  |      |      |      | Home | PgDn | PgUp |  End |      |CtlBsp|
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |  ^A  |      |  ^D  |  ^F  |WebBak| Left | Down |  Up  | Right|      |  Del |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |  ^Z  |  ^X  |  ^C  |  ^V  |WebFwd|      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Prev | Play | Next |      |      |             |      |      | Vol- | Vol+ | Mute |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_NAV] =  LAYOUT( \
+  KC_CAPS, _______, _______, _______, A(KC_F4), _______, _______,    _______,    _______,  _______,    _______, _______, \
+  _______, C(KC_Q), C(KC_W), _______, _______,  _______, KC_HOME,    KC_PGDN,    KC_PGUP,  KC_END,     _______, C(KC_BSPC), \
+  _______, C(KC_A), _______, C(KC_D), C(KC_F),  KC_WBAK, KC_LEFT,    KC_DOWN,    KC_UP,    KC_RGHT,    _______, KC_DEL, \
+  _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V),  KC_WFWD, C(KC_LEFT), C(KC_DOWN), C(KC_UP), C(KC_RGHT), _______, _______, \
+  KC_MPRV, KC_MPLY, KC_MNXT, _______, _______,  _______, _______,    _______,    _______,  KC_VOLD,    KC_VOLU, KC_MUTE \
+),
+
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |RgbTog|RgbMod|      |      |      |      |      |      |
+ * |      |      |      |      |RgbTog|RgbMod|      |      |      |      |      |Sleep |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Reset|      |      | Hue- | Hue+ |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -113,27 +134,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, RGB_SAD, RGB_SAI, _______, _______, _______, _______, _______, KC_DEL, \
   _______, _______, _______, _______, RGB_VAD, RGB_VAI, _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
-),
-
-/* Nav
- * ,-----------------------------------------------------------------------------------.
- * |CapLck|      |      |      |      |      |      |      |      |      |      | Sleep|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  ^Q  |  ^W  |      |      |      | Home | PgDn | PgUp |  End |      |CtlBsp|
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  ^A  |      |  ^D  |  ^F  |WebBak| Left | Down |  Up  | Right|      |  Del |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  ^Z  |  ^X  |  ^C  |  ^V  |WebFwd|      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Prev | Play | Next |      |      |             |      |      | Vol- | Vol+ | Mute |
- * `-----------------------------------------------------------------------------------'
- */
-[_NAV] =  LAYOUT( \
-  KC_CAPS, _______, _______, _______, _______, _______, _______,    _______,    _______,  _______,    _______, _______, \
-  _______, C(KC_Q), C(KC_W), _______, _______, _______, KC_HOME,    KC_PGDN,    KC_PGUP,  KC_END,     _______, C(KC_BSPC), \
-  _______, C(KC_A), _______, C(KC_D), C(KC_F), KC_WBAK, KC_LEFT,    KC_DOWN,    KC_UP,    KC_RGHT,    _______, KC_DEL, \
-  _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), KC_WFWD, C(KC_LEFT), C(KC_DOWN), C(KC_UP), C(KC_RGHT), _______, _______, \
-  KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, _______, _______,    _______,    _______,  KC_VOLD,    KC_VOLU, KC_MUTE \
 )
 
 };
@@ -147,7 +147,7 @@ const rgblight_segment_t PROGMEM my_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_GREEN}  // Light all LEDs green
 );
 
-const rgblight_segment_t PROGMEM my_raise_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+const rgblight_segment_t PROGMEM my_symbol_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_PURPLE}  // Light all LEDs purple
 );
 
@@ -159,7 +159,7 @@ const rgblight_segment_t PROGMEM my_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
   my_capslock_layer,
   my_lower_layer,
-  my_raise_layer,
+  my_symbol_layer,
   my_adjust_layer
 );
 
@@ -179,11 +179,11 @@ void keyboard_post_init_user(void) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   // Activate Adjust layer if both Lower and Raise layers are activated
-  state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+  state = update_tri_layer_state(state, _LOWER, _NAV, _ADJUST);
 
   // Enable and disable RGB layer
   rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
-  rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
+  rgblight_set_layer_state(2, layer_state_cmp(state, _SYMBOL));
   rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
 
   return state;
