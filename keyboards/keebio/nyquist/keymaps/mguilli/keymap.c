@@ -147,7 +147,7 @@ const rgblight_segment_t PROGMEM my_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_GREEN}  // Light all LEDs green
 );
 
-const rgblight_segment_t PROGMEM my_symbol_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+const rgblight_segment_t PROGMEM my_nav_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_PURPLE}  // Light all LEDs purple
 );
 
@@ -155,12 +155,17 @@ const rgblight_segment_t PROGMEM my_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_YELLOW}  // Light all LEDs yellow
 );
 
+const rgblight_segment_t PROGMEM my_symbol_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+  {0, 12, HSV_BLUE}  // Light all LEDs BLUE
+);
+
 // Define array of layers. Later layers take precedence
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
   my_capslock_layer,
   my_lower_layer,
-  my_symbol_layer,
-  my_adjust_layer
+  my_nav_layer,
+  my_adjust_layer,
+  my_symbol_layer
 );
 
 const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {40, 20, 10, 5};
@@ -172,7 +177,7 @@ void keyboard_post_init_user(void) {
 
   // Set default RGB
   rgblight_enable_noeeprom(); // Enables RGB, without saving settings
-  rgblight_sethsv_noeeprom(HSV_CYAN);
+  rgblight_sethsv_noeeprom(HSV_BLUE);
   rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING);
 }
 #endif
@@ -183,8 +188,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
   // Enable and disable RGB layer
   rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
-  rgblight_set_layer_state(2, layer_state_cmp(state, _SYMBOL));
+  rgblight_set_layer_state(2, layer_state_cmp(state, _NAV));
   rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
+  rgblight_set_layer_state(4, layer_state_cmp(state, _SYMBOL));
 
   return state;
 }
