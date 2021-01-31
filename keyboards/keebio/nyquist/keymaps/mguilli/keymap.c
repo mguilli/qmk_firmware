@@ -29,6 +29,8 @@ enum custom_keycodes {
 #define CTL_RGHT LCTL(KC_RGHT)
 #define SPC_SYM LT(_SYMBOL, KC_SPC)
 
+#define HSV_CUST 138, 200, 185
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -168,7 +170,7 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
   my_symbol_layer
 );
 
-const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {40, 20, 10, 5};
+//const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {40, 20, 10, 5};
 
 #ifdef RGBLIGHT_ENABLE
 void keyboard_post_init_user(void) {
@@ -176,8 +178,8 @@ void keyboard_post_init_user(void) {
   rgblight_layers = my_rgb_layers;
 
   // Set default RGB
-  rgblight_enable_noeeprom(); // Enables RGB, without saving settings
-  rgblight_sethsv_noeeprom(HSV_BLUE);
+  // rgblight_enable_noeeprom(); // Enables RGB, without saving settings
+  rgblight_sethsv_noeeprom(HSV_CUST);
   rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING);
 }
 #endif
