@@ -6,20 +6,20 @@
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
-#define _SYMBOL 5
+#define _NUMPAD 1
+#define _LOWER 2
+#define _RAISE 5
 #define _ADJUST 6
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
+  NUMPAD,
   LOWER,
-  SYMBOL,
   ADJUST,
   RAISE,
 };
 
-#define LOWER TT(_LOWER)
+#define NUMPAD TT(_NUMPAD)
 #define RAISE MO(_RAISE)
 #define CTL_ESC LCTL_T(KC_ESC)
 #define CTL_SFT LCTL(KC_LSFT)
@@ -27,9 +27,36 @@ enum custom_keycodes {
 #define CTL_DOWN LCTL(KC_DOWN)
 #define CTL_LEFT LCTL(KC_LEFT)
 #define CTL_RGHT LCTL(KC_RGHT)
-#define SPC_SYM LT(_SYMBOL, KC_SPC)
+#define SPC_LOWER LT(_LOWER, KC_SPC)
 
 #define HSV_CUST 138, 200, 185
+
+// ---------- Tap Dance Configuration -------------
+enum {
+  TD_COLON,
+};
+
+void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_code(KC_SCLN);
+    } else {
+        register_code16(KC_COLN);
+    }
+}
+
+void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        unregister_code(KC_SCLN);
+    } else {
+        unregister_code16(KC_COLN);
+    }
+}
+
+// tap dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    // tap twice for colon
+    [TD_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, dance_cln_reset),
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -43,15 +70,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Sft(')|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |CtlSft| Ctl  | Alt  | OS   |Lower |SpcSym|SpcSym| Raise| Left | Down |  Up  |Right |
+ * | Ctl  |Numpad| Alt  | OS   |Raise |SpcLwr|SpcLwr| Raise| Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT( \
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,  KC_5,    KC_6,    KC_7,  KC_8,    KC_9,    KC_0,    KC_MINS,         \
-  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,    KC_Y,    KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC,         \
-  CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,  KC_G,    KC_H,    KC_J,  KC_K,    KC_L,    KC_SCLN, KC_ENT,          \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,    KC_N,    KC_M,  KC_COMM, KC_DOT,  KC_SLSH, LSFT_T(KC_QUOT), \
-  CTL_SFT, KC_LCTL, KC_LALT, KC_LGUI, LOWER, SPC_SYM, SPC_SYM, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT          \
+  KC_GRV,  KC_1,   KC_2,    KC_3,    KC_4,  KC_5,      KC_6,      KC_7,  KC_8,    KC_9,    KC_0,         KC_MINS,         \
+  KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,  KC_T,      KC_Y,      KC_U,  KC_I,    KC_O,    KC_P,         KC_BSPC,         \
+  CTL_ESC, KC_A,   KC_S,    KC_D,    KC_F,  KC_G,      KC_H,      KC_J,  KC_K,    KC_L,    TD(TD_COLON), KC_ENT,          \
+  KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,  KC_B,      KC_N,      KC_M,  KC_COMM, KC_DOT,  KC_SLSH,      LSFT_T(KC_QUOT), \
+  KC_LCTL, NUMPAD, KC_LALT, KC_LGUI, RAISE, SPC_LOWER, SPC_LOWER, RAISE, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT          \
 ),
 
 /* Lower
@@ -67,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |  0   |   0  |   .  | Enter|      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_LOWER] = LAYOUT( \
+[_NUMPAD] = LAYOUT( \
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PEQL, KC_PSLS, KC_PAST, KC_PMNS, XXXXXXX, XXXXXXX, \
   _______, XXXXXXX, XXXXXXX, KC_MPRV, KC_MNXT, KC_MPLY, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, XXXXXXX, XXXXXXX, \
   _______, XXXXXXX, XXXXXXX, KC_VOLD, KC_VOLU, KC_MUTE, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, XXXXXXX, XXXXXXX, \
@@ -88,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Prev | Play | Next |      |      |      |      |      |      | Vol- | Vol+ | Mute |
  * `-----------------------------------------------------------------------------------'
  */
-[_RAISE] =  LAYOUT( \
+[_LOWER] =  LAYOUT( \
   KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, KC_LT,   KC_GT,   XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,       \
   XXXXXXX, XXXXXXX, XXXXXXX, KC_PLUS, KC_LCBR, KC_RCBR, KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,   XXXXXXX, LCTL(KC_BSPC), \
   XXXXXXX, KC_EQL,  KC_PIPE, KC_MINS, KC_LPRN, KC_RPRN, KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT,  XXXXXXX, KC_DEL,        \
@@ -109,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_SYMBOL] = LAYOUT( \
+[_RAISE] = LAYOUT( \
   KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,        \
   KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, LCTL(KC_BSPC), \
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,        \
@@ -119,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |RgbTog|RgbMod|      |      |      |      |      |Sleep |
+ * | Wake |      |      |      |RgbTog|RgbMod|      |      |      |      |      |Sleep |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Reset|      |      | Hue- | Hue+ |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -131,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] =  LAYOUT( \
-  _______, _______, _______, _______, RGB_TOG, RGB_MOD, _______, _______, _______, _______, _______, KC_SLEP, \
+  KC_WAKE, _______, _______, _______, RGB_TOG, RGB_MOD, _______, _______, _______, _______, _______, KC_SLEP, \
   _______, RESET,   _______, _______, RGB_HUD, RGB_HUI, _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, RGB_SAD, RGB_SAI, _______, _______, _______, _______, _______, KC_DEL, \
   _______, _______, _______, _______, RGB_VAD, RGB_VAI, _______, _______, _______, _______, _______, _______, \
@@ -140,12 +167,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+// ------- RGB Configuration ---------
 // RGB indicator layers
 const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_RED}  // Light all LEDs red
 );
 
-const rgblight_segment_t PROGMEM my_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+const rgblight_segment_t PROGMEM my_numpad_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_GREEN}  // Light all LEDs green
 );
 
@@ -157,17 +185,17 @@ const rgblight_segment_t PROGMEM my_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_YELLOW}  // Light all LEDs yellow
 );
 
-const rgblight_segment_t PROGMEM my_symbol_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+const rgblight_segment_t PROGMEM my_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 12, HSV_BLUE}  // Light all LEDs BLUE
 );
 
 // Define array of layers. Later layers take precedence
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
   my_capslock_layer,
-  my_lower_layer,
+  my_numpad_layer,
   my_raise_layer,
   my_adjust_layer,
-  my_symbol_layer
+  my_lower_layer
 );
 
 //const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {40, 20, 10, 5};
@@ -186,13 +214,13 @@ void keyboard_post_init_user(void) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   // Activate Adjust layer if both Lower and Raise layers are activated
-  state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+  state = update_tri_layer_state(state, _NUMPAD, _RAISE, _ADJUST);
 
   // Enable and disable RGB layer
-  rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
+  rgblight_set_layer_state(1, layer_state_cmp(state, _NUMPAD));
   rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
   rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
-  rgblight_set_layer_state(4, layer_state_cmp(state, _SYMBOL));
+  rgblight_set_layer_state(4, layer_state_cmp(state, _LOWER));
 
   return state;
 }
@@ -201,3 +229,4 @@ bool led_update_user(led_t led_state) {
   rgblight_set_layer_state(0, led_state.caps_lock);
   return true;
 }
+
