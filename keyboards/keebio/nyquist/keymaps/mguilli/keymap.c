@@ -66,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Sft(')|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctl  |Numpad| Alt  | OS   |Raise |SpcLwr|SpcLwr| Raise| Left | Down |  Up  |Right |
+ * |CtlSft|Numpad| Alt  | OS   |Raise |SpcLwr|SpcLwr| Raise| Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT( \
@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   TD(TD_CTL), NUMPAD, KC_LALT, KC_LGUI, RAISE, SPC_LOWER, SPC_LOWER, RAISE, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT          \
 ),
 
-/* Lower
+/* Numpad
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |  =   |  /   |   *  |   -  |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_PENT, XXXXXXX, XXXXXXX  \
 ),
 
-/* Raise
+/* Lower
  * ,-----------------------------------------------------------------------------------.
  * |CapLck|      |      |      |  <   |  >   |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -119,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______,  _______,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX        \
 ),
 
-/* Symbol
+/* Raise
  * ,-----------------------------------------------------------------------------------.
  * | F11  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F12  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -275,7 +275,7 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
 }
 
 void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
+    if (state->count == 2) {
         register_code16(KC_COLN);
     } else {
         register_code(KC_SCLN);
@@ -283,7 +283,7 @@ void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
+    if (state->count == 2) {
         unregister_code16(KC_COLN);
     } else {
         unregister_code(KC_SCLN);
@@ -302,15 +302,14 @@ static tap ctl_tap_state = {
 void ctl_finished(qk_tap_dance_state_t *state, void *user_data) {
     ctl_tap_state.state = cur_dance(state);
     switch (ctl_tap_state.state) {
-        case SINGLE_TAP: set_oneshot_mods(MOD_BIT(KC_LCTL)); break;
-        case SINGLE_HOLD: register_code(KC_LCTL); break;
-        case DOUBLE_TAP: set_oneshot_mods(MOD_BIT(KC_LCTL) | MOD_BIT(KC_LSFT)); break;
+        case SINGLE_TAP: set_oneshot_mods(MOD_BIT(KC_LCTL) | MOD_BIT(KC_LSFT)); break;
+        case SINGLE_HOLD: register_mods(MOD_BIT(KC_LCTL) | MOD_BIT(KC_LSFT)); break;
     }
 }
 
 void ctl_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (ctl_tap_state.state == SINGLE_HOLD) {
-        unregister_code(KC_LCTL);
+        unregister_mods(MOD_BIT(KC_LCTL) | MOD_BIT(KC_LSFT));
     }
 }
 
