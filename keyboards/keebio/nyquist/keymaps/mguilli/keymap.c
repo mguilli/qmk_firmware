@@ -50,6 +50,7 @@ enum {
 enum {
   TD_COLON,
   TD_CTL,
+  TD_QENT,
 };
 
 uint8_t cur_dance(qk_tap_dance_state_t *state);
@@ -62,39 +63,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |CtlEsc|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | Ent  |
+ * |CtlEsc|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |'/Ent |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Sft(')|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |CtlSft|Numpad| Alt  | OS   |Raise |SpcLwr|SpcLwr| Raise| Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT( \
-  KC_GRV,  KC_1,   KC_2,    KC_3,    KC_4,  KC_5,      KC_6,      KC_7,  KC_8,    KC_9,    KC_0,         KC_MINS,         \
-  KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,  KC_T,      KC_Y,      KC_U,  KC_I,    KC_O,    KC_P,         KC_BSPC,         \
-  CTL_ESC, KC_A,   KC_S,    KC_D,    KC_F,  KC_G,      KC_H,      KC_J,  KC_K,    KC_L,    TD(TD_COLON), KC_ENT,          \
-  KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,  KC_B,      KC_N,      KC_M,  KC_COMM, KC_DOT,  KC_SLSH,      LSFT_T(KC_QUOT), \
-  TD(TD_CTL), NUMPAD, KC_LALT, KC_LGUI, RAISE, SPC_LOWER, SPC_LOWER, RAISE, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT          \
+  KC_GRV,     KC_1,   KC_2,    KC_3,    KC_4,  KC_5,      KC_6,      KC_7,  KC_8,    KC_9,    KC_0,         KC_MINS,     \
+  KC_TAB,     KC_Q,   KC_W,    KC_E,    KC_R,  KC_T,      KC_Y,      KC_U,  KC_I,    KC_O,    KC_P,         KC_BSPC,     \
+  CTL_ESC,    KC_A,   KC_S,    KC_D,    KC_F,  KC_G,      KC_H,      KC_J,  KC_K,    KC_L,    TD(TD_COLON), TD(TD_QENT), \
+  KC_LSFT,    KC_Z,   KC_X,    KC_C,    KC_V,  KC_B,      KC_N,      KC_M,  KC_COMM, KC_DOT,  KC_SLSH,      KC_RSFT,     \
+  TD(TD_CTL), NUMPAD, KC_LALT, KC_LGUI, RAISE, SPC_LOWER, SPC_LOWER, RAISE, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT      \
 ),
 
 /* Numpad
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |  =   |  /   |   *  |   -  |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Tab  |      |      | Prev | Next | Play |  7   |   8  |   9  |   +  |      |      |
+ * | Tab  |      |      |      |      |      |  7   |   8  |   9  |   +  |      | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      | Vol- | Vol+ | Mute |  4   |   5  |   6  |   +  |      |      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |  1   |   2  |   3  | Enter|      |      |
+ * | Ctl  |      |      | Prev | Next | Play |  4   |   5  |   6  |   +  |      | Del  |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |      |      | Vol- | Vol+ | Mute |  1   |   2  |   3  | Enter|      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |  0   |   0  |   .  | Enter|      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_NUMPAD] = LAYOUT( \
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PEQL, KC_PSLS, KC_PAST, KC_PMNS, XXXXXXX, XXXXXXX, \
-  _______, XXXXXXX, XXXXXXX, KC_MPRV, KC_MNXT, KC_MPLY, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, XXXXXXX, XXXXXXX, \
-  _______, XXXXXXX, XXXXXXX, KC_VOLD, KC_VOLU, KC_MUTE, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, XXXXXXX, XXXXXXX, \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PENT, XXXXXXX, XXXXXXX, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, XXXXXXX, _______, \
+  _______, XXXXXXX, XXXXXXX, KC_MPRV, KC_MNXT, KC_MPLY, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, XXXXXXX, KC_DEL, \
+  XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLD, KC_VOLU, KC_MUTE, KC_P1,   KC_P2,   KC_P3,   KC_PENT, XXXXXXX, XXXXXXX, \
   _______, _______, _______, _______, _______, _______, KC_P0,   KC_P0,   KC_PDOT, KC_PENT, XXXXXXX, XXXXXXX  \
 ),
 
@@ -102,21 +103,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |CapLck|      |      |      |  <   |  >   |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  +   |  {   |  }   | Home | PgDn | PgUp |  End |      |CtlBsp|
+ * |      |      |  &   |  +   |  {   |  }   | Home | PgDn | PgUp |  End |      |CtlBsp|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |  =   |  |   |  -   |  (   |  )   | Left | Down |  Up  | Right|      |  Del |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |  \   |  *   |  _   |  [   |  ]   |CtlLft|CtlDn | CtlUp| CtlRt|      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Prev | Play | Next |      |      |      |      |      |      | Vol- | Vol+ | Mute |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] =  LAYOUT( \
   KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, KC_LT,   KC_GT,   XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,       \
-  XXXXXXX, XXXXXXX, XXXXXXX, KC_PLUS, KC_LCBR, KC_RCBR, KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,   XXXXXXX, LCTL(KC_BSPC), \
-  XXXXXXX, KC_EQL,  KC_PIPE, KC_MINS, KC_LPRN, KC_RPRN, KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT,  XXXXXXX, KC_DEL,        \
-  XXXXXXX, KC_BSLS, KC_ASTR, KC_UNDS, KC_LBRC, KC_RBRC, CTL_LEFT, CTL_DOWN, CTL_UP,  CTL_RGHT, _______, XXXXXXX,       \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______,  _______,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX        \
+  XXXXXXX, XXXXXXX, KC_AMPR, KC_PLUS, KC_LCBR, KC_RCBR, KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,   XXXXXXX, LCTL(KC_BSPC), \
+  _______, KC_EQL,  KC_PIPE, KC_MINS, KC_LPRN, KC_RPRN, KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT,  XXXXXXX, KC_DEL,        \
+  _______, KC_BSLS, KC_ASTR, KC_UNDS, KC_LBRC, KC_RBRC, CTL_LEFT, CTL_DOWN, CTL_UP,  CTL_RGHT, _______, _______,       \
+  _______, _______, _______, _______, _______, _______, _______,  _______,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX        \
 ),
 
 /* Raise
@@ -136,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,        \
   KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, LCTL(KC_BSPC), \
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,        \
-  XXXXXXX, KC_UNDS, KC_MINS, KC_PLUS, KC_EQL,  XXXXXXX, XXXXXXX, XXXXXXX, KC_PIPE, KC_BSLS, _______, XXXXXXX,       \
+  _______, KC_UNDS, KC_MINS, KC_PLUS, KC_EQL,  XXXXXXX, XXXXXXX, XXXXXXX, KC_PIPE, KC_BSLS, _______, _______,       \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______        \
 ),
 
@@ -318,4 +319,5 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // tap twice for colon
     [TD_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, dance_cln_reset),
     [TD_CTL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ctl_finished, ctl_reset),
+    [TD_QENT] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_ENT),
 };
