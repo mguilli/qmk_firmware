@@ -20,7 +20,7 @@ enum custom_keycodes {
 };
 
 #define NUMPAD TT(_NUMPAD)
-#define RAISE MO(_RAISE)
+#define RAISE LT(_RAISE, KC_ENT)
 #define CTL_ESC LCTL_T(KC_ESC)
 #define CTL_UP LCTL(KC_UP)
 #define CTL_DOWN LCTL(KC_DOWN)
@@ -99,23 +99,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |CapLck|      |      |      |  <   |  >   |      |      |      |      |      |      |
+ * |CapLck|      |  *   |      |  <   |  >   |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |  &   |  +   |  {   |  }   | Home | PgDn | PgUp |  End |      |CtlBsp|
+ * |      |  !   |  @   |  #   |  {   |  }   |      | PgUp | Home |      |      |CtlBsp|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  =   |  |   |  -   |  (   |  )   | Left | Down |  Up  | Right|      |  Del |
+ * |      |  +   |  |   |  _   |  (   |  )   | Left | Down |  Up  | Right|      |  Del |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  \   |  *   |  _   |  [   |  ]   |CtlLft|CtlDn | CtlUp| CtlRt|      |      |
+ * |      |  =   |  &   |  -   |  [   |  ]   |      | PgDn | End  |      |  \   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] =  LAYOUT( \
-  KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, KC_LT,   KC_GT,   XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,       \
-  XXXXXXX, XXXXXXX, KC_AMPR, KC_PLUS, KC_LCBR, KC_RCBR, KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,   XXXXXXX, LCTL(KC_BSPC), \
-  _______, KC_EQL,  KC_PIPE, KC_MINS, KC_LPRN, KC_RPRN, KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT,  XXXXXXX, KC_DEL,        \
-  _______, KC_BSLS, KC_ASTR, KC_UNDS, KC_LBRC, KC_RBRC, CTL_LEFT, CTL_DOWN, CTL_UP,  CTL_RGHT, _______, _______,       \
-  _______, _______, _______, _______, _______, _______, _______,  _______,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX        \
+  KC_CAPS, XXXXXXX, KC_ASTR, XXXXXXX, KC_LT,   KC_GT,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       \
+  XXXXXXX, KC_EXLM, KC_AT,   KC_HASH, KC_LCBR, KC_RCBR, XXXXXXX, KC_PGUP, KC_HOME, XXXXXXX, XXXXXXX, LCTL(KC_BSPC), \
+  _______, KC_PLUS, KC_PIPE, KC_UNDS, KC_LPRN, KC_RPRN, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, KC_DEL,        \
+  _______, KC_EQL,  KC_AMPR, KC_MINS, KC_LBRC, KC_RBRC, XXXXXXX, KC_PGDN, KC_END,  XXXXXXX, KC_BSLS, _______,       \
+  _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX        \
 ),
 
 /* Raise
