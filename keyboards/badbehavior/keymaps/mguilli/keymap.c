@@ -3,7 +3,6 @@
 enum custom_layers {
   _QWERTY,
   _NAV,
-  _SYMBOL,
   _NUMPAD,
   _FUNCTION,
   _MOUSE,
@@ -13,7 +12,6 @@ enum custom_layers {
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   NAV,
-  SYMBOL,
   NUMPAD,
   FUNCTION,
   MOUSE,
@@ -24,7 +22,6 @@ enum custom_keycodes {
 #define SPC_NAV LT(_NAV, KC_SPC)
 #define SPC_NUM LT(_NUMPAD, KC_SPC)
 #define BSP_FUN LT(_FUNCTION, KC_BSPC)
-#define ENT_SYM LT(_SYMBOL, KC_ENT)
 #define BRC_MSE LT(_MOUSE, KC_LBRC)
 
 #define ESC_CTL CTL_T(KC_ESC)
@@ -46,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
  * │ Shift│   Z  │   X  │   C  │   V  │   B  │[/Mous│ Home │  ]   │   N  │   M  │   ,  │   .  │   /  │Shift │
  * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
- * │Adjust│ Ctl  │ Alt  │ GUI  │   SpaceNum  │BspcFn│      │EntSym│   SpaceNav  │ Left │ Down │  Up  │ Right│
+ * │Adjust│ Ctl  │ Alt  │ GUI  │   SpaceNum  │BspcFn│      │ Enter│   SpaceNav  │ Left │ Down │  Up  │ Right│
  * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
  */
 
@@ -55,51 +52,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_LPRN, KC_RPRN, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
       ESC_CTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_HOME, KC_MUTE, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
       KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    BRC_MSE, KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
-      ADJUST,  KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX, SPC_NUM, BSP_FUN, ENT_SYM, SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
+      ADJUST,  KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX, SPC_NUM, BSP_FUN, KC_ENT, SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
       ),
 
 /* Nav
  * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
  * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │      │      │      │      │      │      │      │      │ Redo │Paste │ Copy │ Cut  │ Undo │      │
+ * │  ~   │  !   │  @   │  #   │  $   │  %   │  <   │      │  >   │ Redo │Paste │ Copy │ Cut  │ Undo │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │      │      │      │      │      ├──────┼──────┼──────┤ Left │ Down │  Up  │ Rght │      │ Caps │
+ * │      │  ^   │  +   │  |   │  _   │  (   ├──────┼──────┼──────┤ Left │ Down │  Up  │ Rght │      │ Caps │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │      │      │      │      │      │      │      │      │ Home │Pg-Dwn│Pg-Up │ End  │      │      │
- * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
- * │      │      │      │      │             │Delete│      │      │             │      │      │      │      │
- * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
- */
-
-  [_NAV] = LAYOUT( \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, U_REDO,  U_PASTE, U_COPY,  U_CUT,   U_UNDO,  XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, KC_CAPS, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, KC_DEL,  _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
-      ),
-
-/* Symbol
- * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
- * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │
- * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
- * │  ~   │  !   │  @   │  #   │  $   │  %   │  {   │      │  }   │      │      │      │      │      │      │
- * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │  ^   │  +   │  |   │  _   │  (   ├──────┼──────┼──────┤      │      │      │      │      │      │
- * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │  *   │  =   │  &   │  -   │  [   │  <   │      │  >   │      │      │      │      │      │      │
+ * │      │  *   │  =   │  &   │  -   │  [   │  {   │      │  }   │ Home │Pg-Dwn│Pg-Up │ End  │      │      │
  * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
  * │      │      │      │      │             │      │      │      │             │      │      │      │      │
  * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
  */
 
-  [_SYMBOL] = LAYOUT( \
+  [_NAV] = LAYOUT( \
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LT,   KC_GT,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      XXXXXXX, KC_CIRC, KC_PLUS, KC_PIPE, KC_UNDS, KC_LPRN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      XXXXXXX, KC_ASTR, KC_EQL,  KC_AMPR, KC_MINS, KC_LBRC, KC_LCBR, KC_RCBR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
+      KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LT,   KC_GT,   U_REDO,  U_PASTE, U_COPY,  U_CUT,   U_UNDO,  XXXXXXX, \
+      XXXXXXX, KC_CIRC, KC_PLUS, KC_PIPE, KC_UNDS, KC_LPRN, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, KC_CAPS, \
+      XXXXXXX, KC_ASTR, KC_EQL,  KC_AMPR, KC_MINS, KC_LBRC, KC_LCBR, KC_RCBR, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, XXXXXXX, \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, KC_DEL,  _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
       ),
 
 /* Numpad
