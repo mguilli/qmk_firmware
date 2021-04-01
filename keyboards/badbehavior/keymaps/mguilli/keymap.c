@@ -6,7 +6,6 @@ enum custom_layers {
   _NAV,
   _NUMPAD,
   _FUNCTION,
-  _MOUSE,
   _ADJUST
 };
 
@@ -15,7 +14,6 @@ enum custom_keycodes {
   NAV,
   NUMPAD,
   FUNCTION,
-  MOUSE,
   ADJUST
 };
 
@@ -23,8 +21,7 @@ enum custom_keycodes {
 #define SPC_NAV LT(_NAV, KC_SPC)
 #define BRC_FUN LT(_FUNCTION, KC_LBRC)
 
-#define SFT_ENT RSFT_T(KC_ENT)
-#define ESC_CTL CTL_T(KC_ESC)
+#define CTL_ESC CTL_T(KC_ESC)
 #define U_REDO C(KC_Y)
 #define U_PASTE C(KC_V)
 #define U_COPY C(KC_C)
@@ -45,9 +42,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
  * │ Tab  │   Q  │   W  │   E  │   R  │   T  │  (   │ Mute │  )   │   Y  │   U  │   I  │   O  │   P  │  \   │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │EscCtl│   A  │   S  │   D  │   F  │   G  ├──────┼──────┼──────┤   H  │   J  │   K  │   L  │   ;  │  '   │
+ * │CtlEsc│   A  │   S  │   D  │   F  │   G  ├──────┼──────┼──────┤   H  │   J  │   K  │   L  │   ;  │  '   │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │ Shift│   Z  │   X  │   C  │   V  │   B  │[/Fun │ Home │  ]   │   N  │   M  │   ,  │   .  │   /  │SftEnt│
+ * │ Shift│   Z  │   X  │   C  │   V  │   B  │[/Fun │ Home │  ]   │   N  │   M  │   ,  │   .  │   /  │ Shift│
  * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
  * │ Ctl  │Adjust│ GUI  │ Alt  │     Bspc    │DelNum│      │ Enter│   SpaceNav  │ Left │ Down │  Up  │ Right│
  * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
@@ -56,8 +53,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT( \
       KC_GRV,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,    TO(_NUMPAD), KC_EQL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,         KC_MINS, \
       KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,    KC_LPRN,     KC_RPRN, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,         KC_BSLS, \
-      ESC_CTL, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,    KC_HOME,     KC_MUTE, KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_COLON), KC_QUOT, \
-      KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    BRC_FUN,     KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,      SFT_ENT, \
+      CTL_ESC, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,    KC_HOME,     KC_MUTE, KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_COLON), KC_QUOT, \
+      KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    BRC_FUN,     KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,      KC_RSFT, \
       KC_LCTL, ADJUST, KC_LGUI, KC_LALT, XXXXXXX, KC_BSPC, TD(DEL_NUM), KC_ENT,  SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT  \
       ),
 
@@ -85,11 +82,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Numpad
  * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
- * │      │      │      │      │      │      │NumLok│      │      │      │      │  /   │  *   │  -   │      │
+ * │      │      │      │      │      │      │NumLok│      │  =   │      │  =   │  /   │  *   │  -   │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
  * │ Tab  │      │  Up  │      │      │      │      │      │      │      │  7   │  8   │  9   │  +   │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │EscCtl│ Left │ Down │ Rght │      │      ├──────┼──────┼──────┤      │  4   │  5   │  6   │  +   │ Del  │
+ * │EscCtl│ Left │ Down │ Rght │      │      ├──────┼──────┼──────┤      │  4   │  5   │  6   │  +   │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
  * │ Shift│      │      │      │      │      │      │      │      │      │  1   │  2   │  3   │ Enter│      │
  * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
@@ -98,11 +95,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
   [_NUMPAD] = LAYOUT( \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_QWERTY), XXXXXXX, XXXXXXX, XXXXXXX, KC_PSLS, KC_PAST, KC_PMNS, XXXXXXX, \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_QWERTY), KC_PEQL, XXXXXXX, KC_PEQL, KC_PSLS, KC_PAST, KC_PMNS, XXXXXXX, \
       _______, XXXXXXX, KC_UP,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, XXXXXXX, \
-      _______, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, KC_DEL,  \
+      _______, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, XXXXXXX,  \
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,     XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PENT, XXXXXXX, \
-      _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______,     KC_BSPC, KC_P0,   XXXXXXX, KC_P0,   KC_PDOT, KC_PENT, XXXXXXX  \
+      _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______,     _______, KC_P0,   XXXXXXX, KC_P0,   KC_PDOT, KC_PENT, XXXXXXX  \
       ),
 
 /* Function
@@ -125,28 +122,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F4,   KC_F5,   KC_F6,   XXXXXXX, KC_PAUS, \
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   XXXXXXX, XXXXXXX, \
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
-      ),
-
-/* Mouse
- * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
- * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │
- * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │
- * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │      │      │      │      │      ├──────┼──────┼──────┤M_LEFT│M_DOWN│ M_UP │M_RGHT│      │      │
- * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │      │      │      │      │      │      │      │      │ MW_L │ MW_D │ MW_U │ MW_R │      │      │
- * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
- * │      │      │      │      │             │      │      │      │    BTN_1    │ BTN_3│ BTN_2│      │      │
- * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
- */
-
-  [_MOUSE] = LAYOUT( \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, XXXXXXX, KC_BTN3, KC_BTN2, XXXXXXX, XXXXXXX  \
       ),
 
 /* Adjust
@@ -207,7 +182,7 @@ void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-// Tap Dance: Single = Bspc, Hold = Numpad, Double = Lock Numpad
+// Tap Dance: Single = Delete, Hold = Numpad
 // Holding key while numpad locked should access QWERTY layer
 static uint8_t tap = 0;
 
@@ -226,17 +201,6 @@ void del_num_reset(qk_tap_dance_state_t *state, void *user_data) {
     tap = 0;
 }
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case TD(DEL_NUM):
-            return 120;
-        case TD(TD_COLON):
-            return TAPPING_TERM + 30;
-        default:
-            return TAPPING_TERM;
-    }
-}
-
 // Define tap dance actions
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap twice for colon
@@ -244,3 +208,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap twice to toggle Numpad layer
     [DEL_NUM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, del_num_finished, del_num_reset),
 };
+
+// Per key tapping term definitions
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TD(DEL_NUM):
+            return TAPPING_TERM - 80;
+        case TD(TD_COLON):
+            return TAPPING_TERM + 30;
+        default:
+            return TAPPING_TERM;
+    }
+}
+

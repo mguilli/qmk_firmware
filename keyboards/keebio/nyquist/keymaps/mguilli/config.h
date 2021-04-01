@@ -32,8 +32,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_VAL_STEP 8
 #define RGBLIGHT_SPLIT
 
-#define TAPPING_TOGGLE 3
 #define TAPPING_TERM 200
+#define TAPPING_TERM_PER_KEY
 
 // Turn off RGB when host sleeps
 #define RGBLIGHT_SLEEP
