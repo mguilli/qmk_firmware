@@ -22,6 +22,18 @@ enum custom_keycodes {
 #define DEL_NUM LT(_NUMPAD, KC_DEL)
 
 #define CTL_ESC LCTL_T(KC_ESC)
+
+// Left-hand home row mods
+#define GUI_A LGUI_T(KC_A)
+#define ALT_S LALT_T(KC_S)
+#define CTL_D LCTL_T(KC_D)
+#define SFT_F LSFT_T(KC_F)
+
+// Right-hand home row mods
+#define SFT_J RSFT_T(KC_J)
+#define CTL_K RCTL_T(KC_K)
+#define ALT_L LALT_T(KC_L)
+
 #define U_REDO C(KC_Y)
 #define U_PASTE C(KC_V)
 #define U_COPY C(KC_C)
@@ -54,8 +66,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT( \
   KC_GRV,     KC_1,   KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,   KC_8,    KC_9,    KC_0,         KC_MINS, \
   KC_TAB,     KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,         KC_BSPC, \
-  CTL_ESC,    KC_A,   KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,   KC_K,    KC_L,    TD(TD_COLON), KC_QUOT, \
-  KC_LSFT,    KC_Z,   KC_X,    KC_C,    KC_V,    B_FUN,    KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH,      KC_RSFT, \
+  CTL_ESC,    GUI_A,  ALT_S,   CTL_D,   SFT_F,   KC_G,    KC_H,    SFT_J,  CTL_K,   ALT_L,   TD(TD_COLON), KC_QUOT, \
+  KC_LSFT,    KC_Z,   KC_X,    KC_C,    KC_V,    B_FUN,   KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH,      KC_RSFT, \
   TD(TD_CTL), ADJUST, KC_LGUI, KC_LALT, DEL_NUM, KC_BSPC, SPC_NAV, KC_ENT, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT  \
 ),
 
@@ -226,19 +238,19 @@ static uint8_t tap = 0;
 
 // Tap Dance: Double tap to access colon
 void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 2) {
-        register_code16(KC_COLN);
-    } else {
-        register_code(KC_SCLN);
+    tap = cur_dance(state);
+    switch (tap) {
+        case DOUBLE_TAP: register_code16(KC_COLN); break;
+        default: register_code(KC_SCLN);
     }
 }
 
 void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 2) {
-        unregister_code16(KC_COLN);
-    } else {
-        unregister_code(KC_SCLN);
+    switch (tap) {
+        case DOUBLE_TAP: unregister_code16(KC_COLN); break;
+        default: unregister_code(KC_SCLN);
     }
+    tap = 0;
 }
 
 // --------------- Ctrl/Shift Tap Dance ------------------------
