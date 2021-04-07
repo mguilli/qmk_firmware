@@ -96,24 +96,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Numpad
  * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
- * │      │      │      │      │      │      │NumLok│      │      │      │      │  /   │  *   │  -   │      │
+ * │      │      │      │      │      │      │NumLok│      │  =   │      │  =   │  /   │  *   │  -   │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
  * │ Tab  │      │  Up  │      │      │      │      │      │      │      │  7   │  8   │  9   │  +   │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │EscCtl│ Left │ Down │ Rght │      │      ├──────┼──────┼──────┤      │  4   │  5   │  6   │  +   │ Del  │
+ * │EscCtl│ Left │ Down │ Rght │      │      ├──────┼──────┼──────┤      │  4   │  5   │  6   │  +   │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
  * │ Shift│      │      │      │      │      │      │      │      │      │  1   │  2   │  3   │ Enter│      │
  * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
- * │ Ctl  │      │ GUI  │ Alt  │             │      │      │ Bspc │  0          │  0   │  .   │ Enter│      │
+ * │ Ctl  │      │ GUI  │ Alt  │             │      │      │ Entr │  0          │  0   │  .   │ Enter│      │
  * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
  */
 
   [_NUMPAD] = LAYOUT( \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_QWERTY), XXXXXXX, XXXXXXX, XXXXXXX, KC_PSLS, KC_PAST, KC_PMNS, XXXXXXX, \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_QWERTY), _______, XXXXXXX, XXXXXXX, KC_PSLS, KC_PAST, KC_PMNS, XXXXXXX, \
       _______, XXXXXXX, KC_UP,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, XXXXXXX, \
-      _______, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, KC_DEL,  \
+      _______, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, XXXXXXX, \
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,     XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PENT, XXXXXXX, \
-      _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______,     KC_BSPC, KC_P0,   XXXXXXX, KC_P0,   KC_PDOT, KC_PENT, XXXXXXX  \
+      _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______,     _______, KC_P0,   XXXXXXX, KC_P0,   KC_PDOT, KC_PENT, XXXXXXX  \
       ),
 
 /* Function
@@ -237,19 +237,6 @@ void del_num_reset(qk_tap_dance_state_t *state, void *user_data) {
     tap = 0;
 }
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case TD(DEL_NUM):
-            return TAPPING_TERM - 80;
-        case TD(TD_COLON):
-            return TAPPING_TERM + 30;
-        case GUI_A:
-            return TAPPING_TERM + 30;
-        default:
-            return TAPPING_TERM;
-    }
-}
-
 // Define tap dance actions
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap twice for colon
@@ -257,3 +244,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap twice to toggle Numpad layer
     [DEL_NUM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, del_num_finished, del_num_reset),
 };
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TD(DEL_NUM):
+            return TAPPING_TERM - 80;
+        case TD(TD_COLON):
+            return TAPPING_TERM + 30;
+        case GUI_A:
+            return TAPPING_TERM + 60;
+        default:
+            return TAPPING_TERM;
+    }
+}
