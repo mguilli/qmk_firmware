@@ -4,6 +4,7 @@
 enum custom_layers {
   _QWERTY,
   _NAV,
+  _SYMBOL,
   _NUMPAD,
   _FUNCTION,
   _MOUSE,
@@ -16,12 +17,20 @@ enum custom_keycodes {
   NUMPAD,
   FUNCTION,
   MOUSE,
-  ADJUST
+  ADJUST,
+  // Macros, where | is the cursor
+  DBL_BRC,  // [|]
+  DBL_CBR,  // {|}
+  DBL_PRN,  // (|)
+  DBL_ARR,  // <|>
+  DBL_SQT,  // '|'
+  DBL_DQT   // "|"
 };
 
 #define ADJUST MO(_ADJUST)
 #define SPC_NAV LT(_NAV, KC_SPC)
 #define BRC_FUN LT(_FUNCTION, KC_LBRC)
+#define BSP_SYM LT(_SYMBOL, KC_BSPC)
 
 #define SFT_ENT RSFT_T(KC_ENT)
 #define ESC_CTL CTL_T(KC_ESC)
@@ -60,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
  * │ Shift│   Z  │   X  │   C  │   V  │   B  │[/Fun │ Home │  ]   │   N  │   M  │   ,  │   .  │   /  │SftEnt│
  * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
- * │ Ctl  │Adjust│ GUI  │ Alt  │     Bspc    │DelNum│      │ Enter│   SpaceNav  │ Left │ Down │  Up  │ Right│
+ * │ Ctl  │Adjust│ GUI  │ Alt  │   BSP_SYM   │DelNum│      │ Enter│   SpaceNav  │ Left │ Down │  Up  │ Right│
  * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
  */
 
@@ -69,18 +78,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,    KC_LPRN,     KC_RPRN, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,         KC_BSLS, \
       ESC_CTL, GUI_A,  ALT_S,   CTL_D,   SFT_F,   KC_G,    KC_HOME,     KC_MUTE, KC_H,    SFT_J,   CTL_K,   ALT_L,   TD(TD_COLON), KC_QUOT, \
       KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    BRC_FUN,     KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,      SFT_ENT, \
-      KC_LCTL, ADJUST, KC_LGUI, KC_LALT, XXXXXXX, KC_BSPC, TD(DEL_NUM), KC_ENT,  SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT  \
+      KC_LCTL, ADJUST, KC_LGUI, KC_LALT, XXXXXXX, BSP_SYM, TD(DEL_NUM), KC_ENT,  SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT  \
       ),
 
 /* Nav
  * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
  * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
- * │  ~   │  !   │  @   │  #   │  $   │  %   │  <   │      │  >   │ Redo │Paste │ Copy │ Cut  │ Undo │      │
+ * │      │      │      │      │      │      │      │      │      │ Redo │Paste │ Copy │ Cut  │ Undo │      │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │  =   │  +   │  _   │  -   │  (   ├──────┼──────┼──────┤ Left │ Down │  Up  │ Rght │      │ Caps │
+ * │      │ GUI  │ ALT  │ CTL  │ SFT  │      ├──────┼──────┼──────┤ Left │ Down │  Up  │ Rght │      │ Caps │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │      │  ^   │  &   │  *   │  |   │  [   │  {   │      │  }   │ Home │Pg-Dwn│Pg-Up │ End  │      │      │
+ * │      │      │      │      │      │      │      │      │      │ Home │Pg-Dwn│Pg-Up │ End  │      │      │
  * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
  * │      │      │      │      │             │      │      │      │             │      │      │      │      │
  * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
@@ -88,10 +97,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NAV] = LAYOUT( \
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LT,   KC_GT,   U_REDO,  U_PASTE, U_COPY,  U_CUT,   U_UNDO,  XXXXXXX, \
-      _______, KC_EQL,  KC_PLUS, KC_UNDS, KC_MINS, KC_LPRN, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, KC_CAPS, \
-      _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_PIPE, KC_LBRC, KC_LCBR, KC_RCBR, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, XXXXXXX, \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, U_REDO,  U_PASTE, U_COPY,  U_CUT,   U_UNDO,  XXXXXXX, \
+      _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, KC_CAPS, \
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, XXXXXXX, \
       _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
+      ),
+
+/* Symbol
+ * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
+ * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │
+ * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
+ * │  ~   │  !   │  @   │  #   │  $   │  %   │  <   │      │  >   │  ^   │  &   │  *   │  (   │  )   │      │
+ * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
+ * │      │  =   │  +   │  _   │  -   │  [   ├──────┼──────┼──────┤  ]   │      │      │      │      │  ''  │
+ * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
+ * │      │  <>  │  {}  │  []  │  ()  │  {   │  {   │      │  }   │  }   │  |   │  <   │  >   │  ?   │  ""  │
+ * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
+ * │      │      │      │      │             │      │      │      │             │      │      │      │      │
+ * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
+ */
+
+  [_SYMBOL] = LAYOUT( \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+      KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LT,   KC_GT,   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, XXXXXXX, \
+      XXXXXXX, KC_EQL,  KC_PLUS, KC_UNDS, KC_MINS, KC_LBRC, XXXXXXX, XXXXXXX, KC_RBRC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DBL_SQT, \
+      XXXXXXX, DBL_ARR, DBL_CBR, DBL_BRC, DBL_PRN, KC_LCBR, KC_LCBR, KC_RCBR, KC_RCBR, KC_PIPE, KC_LT,   KC_GT,   KC_QUES, DBL_DQT, \
+      XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
       ),
 
 /* Numpad
@@ -181,6 +212,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
       XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
       )
+};
+
+// Macros
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        switch (keycode) {
+            case DBL_PRN: SEND_STRING("()" SS_TAP(X_LEFT)); break;
+            case DBL_CBR: SEND_STRING("{}" SS_TAP(X_LEFT)); break;
+            case DBL_BRC: SEND_STRING("[]" SS_TAP(X_LEFT)); break;
+            case DBL_ARR: SEND_STRING("<>" SS_TAP(X_LEFT)); break;
+            case DBL_SQT: SEND_STRING("''" SS_TAP(X_LEFT)); break;
+            case DBL_DQT: SEND_STRING("\"\"" SS_TAP(X_LEFT)); break;
+        }
+    }
+    return true;
 };
 
 void encoder_update_user(uint8_t index, bool clockwise) {
