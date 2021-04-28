@@ -18,22 +18,24 @@ enum custom_keycodes {
   FUNCTION,
   MOUSE,
   ADJUST,
-  // Macros, where | is the cursor
-  DBL_BRC,  // [|]
-  DBL_CBR,  // {|}
-  DBL_PRN,  // (|)
-  DBL_ARR,  // <|>
-  DBL_SQT,  // '|'
-  DBL_DQT   // "|"
+  // Macros, where _ is the cursor
+  DBL_BRC,  // [_]
+  DBL_CBR,  // {_}
+  DBL_PRN,  // (_)
+  DBL_PIP,  // |_|
+  DBL_ARR,  // <_>
+  DBL_SQT,  // '_'
+  DBL_DQT   // "_"
 };
 
 #define ADJUST MO(_ADJUST)
 #define SPC_NAV LT(_NAV, KC_SPC)
 #define BRC_FUN LT(_FUNCTION, KC_LBRC)
 #define BSP_SYM LT(_SYMBOL, KC_BSPC)
+#define ENT_SYM LT(_SYMBOL, KC_ENT)
 
-#define SFT_ENT RSFT_T(KC_ENT)
 #define ESC_CTL CTL_T(KC_ESC)
+
 #define U_REDO C(KC_Y)
 #define U_PASTE C(KC_V)
 #define U_COPY C(KC_C)
@@ -50,10 +52,11 @@ enum custom_keycodes {
 #define SFT_J RSFT_T(KC_J)
 #define CTL_K RCTL_T(KC_K)
 #define ALT_L LALT_T(KC_L)
+#define GUI_SC LGUI_T(KC_SCLN)
 
 // Tap dance enums
 enum {
-  TD_COLON,
+  // TD_COLON,
   DEL_NUM,
 };
 
@@ -67,18 +70,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
  * │EscCtl│   A  │   S  │   D  │   F  │   G  ├──────┼──────┼──────┤   H  │   J  │   K  │   L  │   ;  │  '   │
  * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
- * │ Shift│   Z  │   X  │   C  │   V  │   B  │[/Fun │ Home │  ]   │   N  │   M  │   ,  │   .  │   /  │SftEnt│
+ * │ Shift│   Z  │   X  │   C  │   V  │   B  │[/Fun │ Home │  ]   │   N  │   M  │   ,  │   .  │   /  │ Shift│
  * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
  * │ Ctl  │Adjust│ GUI  │ Alt  │   BSP_SYM   │DelNum│      │ Enter│   SpaceNav  │ Left │ Down │  Up  │ Right│
  * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
  */
 
   [_QWERTY] = LAYOUT( \
-      KC_GRV,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,    C(KC_TAB),   KC_EQL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,         KC_MINS, \
-      KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,    KC_LPRN,     KC_RPRN, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,         KC_BSLS, \
-      ESC_CTL, GUI_A,  ALT_S,   CTL_D,   SFT_F,   KC_G,    KC_HOME,     KC_MUTE, KC_H,    SFT_J,   CTL_K,   ALT_L,   TD(TD_COLON), KC_QUOT, \
-      KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    BRC_FUN,     KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,      SFT_ENT, \
-      KC_LCTL, ADJUST, KC_LGUI, KC_LALT, XXXXXXX, BSP_SYM, TD(DEL_NUM), KC_ENT,  SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,        KC_RGHT  \
+      KC_GRV,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,    C(KC_TAB),   KC_EQL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, \
+      KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,    KC_LPRN,     KC_RPRN, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
+      ESC_CTL, GUI_A,  ALT_S,   CTL_D,   SFT_F,   KC_G,    KC_HOME,     KC_MUTE, KC_H,    SFT_J,   CTL_K,   ALT_L,   GUI_SC,  KC_QUOT, \
+      KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    BRC_FUN,     KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
+      KC_LCTL, ADJUST, KC_LGUI, KC_LALT, XXXXXXX, BSP_SYM, TD(DEL_NUM), ENT_SYM, SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
       ),
 
 /* Nav
@@ -222,6 +225,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case DBL_CBR: SEND_STRING("{}" SS_TAP(X_LEFT)); break;
             case DBL_BRC: SEND_STRING("[]" SS_TAP(X_LEFT)); break;
             case DBL_ARR: SEND_STRING("<>" SS_TAP(X_LEFT)); break;
+            case DBL_PIP: SEND_STRING("||" SS_TAP(X_LEFT)); break;
             case DBL_SQT: SEND_STRING("''" SS_TAP(X_LEFT)); break;
             case DBL_DQT: SEND_STRING("\"\"" SS_TAP(X_LEFT)); break;
         }
@@ -248,19 +252,19 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 // ----------- Tap Dance routines ---------------------
 
 // Tap Dance: Double tap to access colon.
-void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
-    switch(cur_dance(state)) {
-      case DOUBLE_TAP: register_code16(KC_COLN); break;
-      default: register_code(KC_SCLN);
-    }
-}
+// void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
+//     switch(cur_dance(state)) {
+//       case DOUBLE_TAP: register_code16(KC_COLN); break;
+//       default: register_code(KC_SCLN);
+//     }
+// }
 
-void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch(cur_dance(state)) {
-      case DOUBLE_TAP: unregister_code16(KC_COLN); break;
-      default: unregister_code(KC_SCLN);
-    }
-}
+// void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
+//     switch(cur_dance(state)) {
+//       case DOUBLE_TAP: unregister_code16(KC_COLN); break;
+//       default: unregister_code(KC_SCLN);
+//     }
+// }
 
 // Tap Dance: Single = Bspc, Hold = Numpad, Double = Lock Numpad
 // Holding key while numpad locked should access QWERTY layer
@@ -287,17 +291,19 @@ void del_num_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Define tap dance actions
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap twice for colon
-    [TD_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, dance_cln_reset),
+    // [TD_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, dance_cln_reset),
     [DEL_NUM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, del_num_finished, del_num_reset),
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-//        case TD(DEL_NUM):
-//            return TAPPING_TERM - 40;
-        case TD(TD_COLON):
-            return TAPPING_TERM + 50;
+        case TD(DEL_NUM):
+            return TAPPING_TERM - 40;
+        // case TD(TD_COLON):
+            // return TAPPING_TERM + 50;
         case GUI_A:
+            return TAPPING_TERM + 60;
+        case GUI_SC:
             return TAPPING_TERM + 60;
         default:
             return TAPPING_TERM;
