@@ -1,5 +1,4 @@
 #include QMK_KEYBOARD_H
-#include "process_records.c"
 #include "tapdance.c"
 
 // Custom Layers
@@ -39,8 +38,21 @@ enum custom_layers {
 #define ALT_L LALT_T(KC_L)
 #define GUI_SC LGUI_T(KC_SCLN)
 
+// Macros
+enum custom_keycodes {
+  QWERT = SAFE_RANGE,
+  // Surround Macros, where _ is the cursor
+  DBL_BRC,  // [_]
+  DBL_CBR,  // {_}
+  DBL_PRN,  // (_)
+  DBL_PIP,  // |_|
+  DBL_ARR,  // <_>
+  DBL_SQT,  // '_'
+  DBL_DQT   // "_"
+};
+
 // Tap dance enums
-enum {
+enum tap_dance {
   DEL_NUM,
 };
 
@@ -94,11 +106,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
    * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │NUMLOK│
    * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
-   * │      │  !   │  @   │  {   │  }   │  |   │  <   │      │  >   │  ||  │  ()  │  []  │  {}  │  <>  │      │
+   * │  ~   │  !   │  @   │  {   │  }   │  {}  │  <   │      │  >   │  ||  │  _   │  |   │  `   │  &   │  ""  │
    * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
-   * │      │  #   │  $   │  (   │  )   │  `   ├──────┼──────┼──────┤  +   │  -   │  _   │  *   │  /   │  ''  │
+   * │      │  #   │  $   │  (   │  )   │  ()  ├──────┼──────┼──────┤  +   │  -   │  /   │  *   │  :   │  "   │
    * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
-   * │      │  %   │  ^   │  [   │  ]   │  ~   │  {   │      │  }   │  &   │  =   │  <   │  >   │  ?   │  ""  │
+   * │      │  %   │  ^   │  [   │  ]   │  []  │  {   │      │  }   │  <>  │  =   │  <   │  >   │  ?   │  ''  │
    * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
    * │      │      │      │      │             │      │      │      │             │      │      │      │      │
    * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
@@ -106,9 +118,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYMBOL] = LAYOUT( \
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, NUMLOCK, \
-      XXXXXXX, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE, KC_LT,   KC_GT,   DBL_PIP, DBL_PRN, DBL_BRC, DBL_CBR, DBL_ARR, XXXXXXX, \
-      XXXXXXX, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,  XXXXXXX, XXXXXXX, KC_PLUS, KC_MINS, KC_UNDS, KC_ASTR, KC_SLSH, DBL_SQT, \
-      XXXXXXX, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, KC_LCBR, KC_RCBR, KC_AMPR, KC_EQL,  KC_LT,   KC_GT,   KC_QUES, DBL_DQT, \
+      KC_TILD, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, DBL_CBR, KC_LT,   KC_GT,   DBL_PIP, KC_UNDS, KC_PIPE, KC_GRV,  KC_AMPR, DBL_DQT, \
+      XXXXXXX, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, DBL_PRN, XXXXXXX, XXXXXXX, KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_COLN, KC_DQUO, \
+      XXXXXXX, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, DBL_BRC, KC_LCBR, KC_RCBR, DBL_ARR, KC_EQL,  KC_LT,   KC_GT,   KC_QUES, DBL_SQT, \
       XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
       ),
 
@@ -127,11 +139,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 
   [_NUMPAD] = LAYOUT( \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, KC_PEQL, KC_PSLS, KC_PAST, KC_PMNS, _______, \
-      _______, XXXXXXX, KC_UP,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, XXXXXXX, \
-      _______, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, XXXXXXX, \
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   KC_PENT, XXXXXXX, \
-      _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______, KC_P0,   XXXXXXX, KC_P0,   KC_PDOT, KC_PENT, XXXXXXX  \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, KC_EQL,  KC_SLSH, KC_ASTR, KC_MINS, _______, \
+      _______, XXXXXXX, KC_UP,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_7,    KC_8,    KC_9,    KC_PLUS, XXXXXXX, \
+      _______, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_4,    KC_5,    KC_6,    KC_PLUS, XXXXXXX, \
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3,    KC_ENT,  XXXXXXX, \
+      _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______, _______, KC_0,    XXXXXXX, KC_0,    KC_DOT,  KC_ENT,  XXXXXXX  \
       ),
 
   /* Function
@@ -195,6 +207,55 @@ void encoder_update_user(uint8_t index, bool clockwise) {
     }
   }
 }
+
+// -------- Macros ------------
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch(keycode) {
+    // Surround Macros
+    case DBL_PRN:
+      if (record->event.pressed) {
+        SEND_STRING("()" SS_TAP(X_LEFT));
+      }
+      break;
+
+    case DBL_CBR:
+      if (record->event.pressed) {
+        SEND_STRING("{}" SS_TAP(X_LEFT));
+      }
+      break;
+
+    case DBL_BRC:
+      if (record->event.pressed) {
+        SEND_STRING("[]" SS_TAP(X_LEFT));
+      }
+      break;
+
+    case DBL_ARR:
+      if (record->event.pressed) {
+        SEND_STRING("<>" SS_TAP(X_LEFT));
+      }
+      break;
+
+    case DBL_PIP:
+      if (record->event.pressed) {
+        SEND_STRING("||" SS_TAP(X_LEFT));
+      }
+      break;
+
+    case DBL_SQT:
+      if (record->event.pressed) {
+        SEND_STRING("''" SS_TAP(X_LEFT));
+      }
+      break;
+
+    case DBL_DQT:
+      if (record->event.pressed) {
+        SEND_STRING("\"\"" SS_TAP(X_LEFT));
+      }
+      break;
+  }
+  return true;
+};
 
 // ----------- Tap Dance routines ---------------------
 
