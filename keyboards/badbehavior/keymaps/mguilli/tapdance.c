@@ -1,5 +1,6 @@
 // tapdance.c
 
+// ------ Defining Tap Types --------
 enum {
     SINGLE_TAP = 1,
     SINGLE_HOLD,
@@ -10,8 +11,6 @@ enum {
     TRIPLE_HOLD,
     QUAD_TAP
 };
-
-// uint8_t cur_dance(qk_tap_dance_state_t *state);
 
 uint8_t cur_dance(qk_tap_dance_state_t *state) {
     if (state->count == 1) {
@@ -39,6 +38,34 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
         return QUAD_TAP;
     } else return 8; // Magic number. At some point this method will expand to work for more presses
 }
+
+// ----------- Tap Dance routines ---------------------
+
+// Tap Dance: Single = Bspc, Hold = Numpad
+// Holding key while numpad locked should access QWERTY layer
+static uint8_t tap = 0;
+
+void del_num_finished(qk_tap_dance_state_t *state, void *user_data) {
+    tap = cur_dance(state);
+    switch (tap) {
+      case SINGLE_HOLD: layer_invert(_NUMPAD); break;
+      case DOUBLE_HOLD: register_code(KC_DEL); break;
+      default: tap_code(KC_DEL);
+    }
+}
+
+void del_num_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (tap) {
+      case SINGLE_HOLD: layer_invert(_NUMPAD); break;
+      case DOUBLE_HOLD: unregister_code(KC_DEL); break;
+    }
+    tap = 0;
+}
+
+// Define tap dance actions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [DEL_NUM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, del_num_finished, del_num_reset),
+};
 
 // Information
 /* Return an integer that corresponds to what kind of tap dance should be executed.
