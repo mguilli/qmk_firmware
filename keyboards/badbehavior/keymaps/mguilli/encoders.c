@@ -2,15 +2,33 @@
 
 // Encoder modes
 enum encoder_modes {
+  FIRST,
   BROWSER,
+  VIMSCR,
   MEDIA,
   MSWORD,
-  VIMSCR
+  LAST
 };
 
 uint8_t enc_mode = BROWSER;
 
 // ---------- Encoder settings -------------
+
+// Change encoder function
+void increment_encoder(void) {
+  if ((enc_mode + 1) < LAST) {
+    enc_mode++;
+  }
+  return;
+}
+
+void decrement_encoder(void) {
+  if ((enc_mode - 1) > FIRST) {
+    enc_mode--;
+  }
+  return;
+}
+
 // Encoder button press
 void top_encoder_pressed(void) {
   switch (enc_mode) {
@@ -21,7 +39,7 @@ void top_encoder_pressed(void) {
       tap_code(KC_MEDIA_PLAY_PAUSE);
       break;
     case VIMSCR:
-      SEND_STRING(SS_TAP(X_ESC) "vip");
+      tap_code16(KC_CIRC);
       break;
     case MSWORD:
       tap_code16(U_COPY);
@@ -38,7 +56,7 @@ void bot_encoder_pressed(void) {
       tap_code(KC_AUDIO_MUTE);
       break;
     case VIMSCR:
-      tap_code16(KC_CIRC);
+      SEND_STRING(SS_TAP(X_ESC) "vip");
       break;
     case MSWORD:
       tap_code16(U_PASTE);
@@ -56,7 +74,7 @@ void top_encoder_cw(void) {
       tap_code(KC_MNXT);
       break;
     case VIMSCR:
-      tap_code16(KC_RCBR);
+      tap_code16(S(KC_W));
       break;
     case MSWORD:
       tap_code16(C(S(KC_RGHT)));
@@ -73,7 +91,7 @@ void top_encoder_ccw(void) {
       tap_code(KC_MPRV);
       break;
     case VIMSCR:
-      tap_code16(KC_LCBR);
+      tap_code16(S(KC_B));
       break;
     case MSWORD:
       tap_code16(C(S(KC_LEFT)));
@@ -83,6 +101,11 @@ void top_encoder_ccw(void) {
 
 // Bottom encoder rotate
 void bot_encoder_cw(void){
+  if (get_highest_layer(layer_state) == _ADJUST) {
+    increment_encoder();
+    return;
+  }
+
   switch (enc_mode) {
     case BROWSER:
       tap_code(KC_PGDN);
@@ -91,7 +114,7 @@ void bot_encoder_cw(void){
       tap_code(KC_VOLU);
       break;
     case VIMSCR:
-      tap_code16(S(KC_W));
+      tap_code16(KC_RCBR);
       break;
     case MSWORD:
       tap_code16(C(KC_RGHT));
@@ -100,6 +123,11 @@ void bot_encoder_cw(void){
 }
 
 void bot_encoder_ccw(void) {
+  if (get_highest_layer(layer_state) == _ADJUST) {
+    decrement_encoder();
+    return;
+  }
+
   switch (enc_mode) {
     case BROWSER:
       tap_code(KC_PGUP);
@@ -108,7 +136,7 @@ void bot_encoder_ccw(void) {
       tap_code(KC_VOLD);
       break;
     case VIMSCR:
-      tap_code16(S(KC_B));
+      tap_code16(KC_LCBR);
       break;
     case MSWORD:
       tap_code16(C(KC_LEFT));
