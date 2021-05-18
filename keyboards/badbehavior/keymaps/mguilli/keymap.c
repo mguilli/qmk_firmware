@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "keymap.h"
-#include "encoders.c"
 #include "tapdance.c"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -24,6 +23,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,    KC_LPRN,     KC_RPRN, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
       ESC_CTL, GUI_A,  ALT_S,   CTL_D,   SFT_F,   KC_G,    BOT_ENC,     TOP_ENC, KC_H,    SFT_J,   CTL_K,   ALT_L,   GUI_SC,  KC_QUOT, \
       KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    BRC_FUN,     KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
+      XXXXXXX, ADJUST, KC_LGUI, KC_LALT, XXXXXXX, BSP_SYM, TD(DEL_NUM), ENT_SYM, SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
+      ),
+
+  /* Colemak-DH
+   * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
+   * │  `   │   1  │   2  │   3  │   4  │   5  │CtlTab│      │  =   │   6  │   7  │   8  │   9  │   0  │  -   │
+   * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
+   * │ Tab  │   Q  │   W  │   F  │   P  │   B  │  (   │TopEnc│  )   │   J  │   L  │   U  │   Y  │   ;  │  \   │
+   * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
+   * │EscCtl│   A  │   R  │   S  │   T  │   G  ├──────┼──────┼──────┤   M  │   N  │   E  │   I  │   O  │  '   │
+   * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
+   * │ Shift│   Z  │   X  │   C  │   D  │   V  │[/Fun │BotEnc│  ]   │   K  │   H  │   ,  │   .  │   /  │ Shift│
+   * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
+   * │ Ctl  │Adjust│ GUI  │ Alt  │   BSP_SYM   │DelNum│      │ Enter│   SpaceNav  │ Left │ Down │  Up  │ Right│
+   * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
+   */
+
+  [_COLEMAK_DH] = LAYOUT( \
+      KC_GRV,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,    C(KC_TAB),   KC_EQL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, \
+      KC_TAB,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,    KC_LPRN,     KC_RPRN, KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS, \
+      ESC_CTL, GUI_A,  ALT_R,   CTL_S,   SHFT_T,  KC_G,    BOT_ENC,     TOP_ENC, KC_M,    SFT_N,   CTL_E,   ALT_I,   GUI_O,   KC_QUOT, \
+      KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_D,    KC_V,    BRC_FUN,     KC_RBRC, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
       XXXXXXX, ADJUST, KC_LGUI, KC_LALT, XXXXXXX, BSP_SYM, TD(DEL_NUM), ENT_SYM, SPC_NAV, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
       ),
 
@@ -119,10 +140,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
    * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │ Sleep│
    * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
-   * │      │ Reset│      │      │      │      │      │      │      │      │      │      │      │      │      │
+   * │      │ Reset│      │      │      │      │      │      │Colmak│      │      │      │      │      │      │
    * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
    * │      │      │      │      │      │      ├──────┼──────┼──────┤browse│vimscr│media │msword│      │      │
-   * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
+   * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│Qwerty├──────┼──────┼──────┼──────┼──────┼──────┤
    * │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │
    * ├──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┴──────┼──────┼──────┼──────┼──────┤
    * │      │      │      │      │             │      │      │      │             │      │      │      │      │
@@ -130,13 +151,164 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 
   [_ADJUST] = LAYOUT( \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP, \
-      XXXXXXX, RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, E_BROWS, E_VIMSCR, E_MEDIA, E_WORD,  XXXXXXX, XXXXXXX, \
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,         XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP, \
+      XXXXXXX, RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DF(_COLEMAK_DH), XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,         E_BROWS, E_VIMSCR, E_MEDIA, E_WORD,  XXXXXXX, XXXXXXX, \
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DF(_QWERTY),     XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+      XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,         XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
       )
 };
+
+// ---------- Encoder settings -------------
+
+uint8_t enc_mode = BROWSER;
+
+// Change encoder function
+void increment_encoder(void) {
+  if ((enc_mode + 1) < LAST) {
+    enc_mode++;
+  }
+  return;
+}
+
+void decrement_encoder(void) {
+  if ((enc_mode - 1) > FIRST) {
+    enc_mode--;
+  }
+  return;
+}
+
+// Encoder button press
+void top_encoder_pressed(void) {
+  switch (enc_mode) {
+    case BROWSER:
+      tap_code16(C(S(KC_N)));
+      break;
+    case MEDIA:
+      tap_code(KC_MEDIA_PLAY_PAUSE);
+      break;
+    case VIMSCR:
+      tap_code16(KC_CIRC);
+      break;
+    case MSWORD:
+      tap_code16(U_COPY);
+      break;
+  }
+}
+
+void bot_encoder_pressed(void) {
+  switch (enc_mode) {
+    case BROWSER:
+      tap_code(KC_HOME);
+      break;
+    case MEDIA:
+      tap_code(KC_AUDIO_MUTE);
+      break;
+    case VIMSCR:
+      SEND_STRING(SS_TAP(X_ESC) "vip");
+      break;
+    case MSWORD:
+      tap_code16(U_PASTE);
+      break;
+  }
+}
+
+// Top encoder rotate
+void top_encoder_cw(void) {
+  switch (enc_mode) {
+    case BROWSER:
+      tap_code16(C(KC_TAB));
+      break;
+    case MEDIA:
+      tap_code(KC_MNXT);
+      break;
+    case VIMSCR:
+      tap_code16(S(KC_W));
+      break;
+    case MSWORD:
+      tap_code16(C(S(KC_RGHT)));
+      break;
+  }
+}
+
+void top_encoder_ccw(void) {
+  switch (enc_mode) {
+    case BROWSER:
+      tap_code16(C(S(KC_TAB)));
+      break;
+    case MEDIA:
+      tap_code(KC_MPRV);
+      break;
+    case VIMSCR:
+      tap_code16(S(KC_B));
+      break;
+    case MSWORD:
+      tap_code16(C(S(KC_LEFT)));
+      break;
+  }
+}
+
+// Bottom encoder rotate
+void bot_encoder_cw(void){
+  if (get_highest_layer(layer_state) == _ADJUST) {
+    increment_encoder();
+    return;
+  }
+
+  switch (enc_mode) {
+    case BROWSER:
+      tap_code(KC_PGDN);
+      break;
+    case MEDIA:
+      tap_code(KC_VOLU);
+      break;
+    case VIMSCR:
+      tap_code16(KC_RCBR);
+      break;
+    case MSWORD:
+      tap_code16(C(KC_RGHT));
+      break;
+  }
+}
+
+void bot_encoder_ccw(void) {
+  if (get_highest_layer(layer_state) == _ADJUST) {
+    decrement_encoder();
+    return;
+  }
+
+  switch (enc_mode) {
+    case BROWSER:
+      tap_code(KC_PGUP);
+      break;
+    case MEDIA:
+      tap_code(KC_VOLD);
+      break;
+    case VIMSCR:
+      tap_code16(KC_LCBR);
+      break;
+    case MSWORD:
+      tap_code16(C(KC_LEFT));
+      break;
+  }
+}
+
+// Update encoders
+void encoder_update_user(uint8_t index, bool clockwise) {
+  if (index == 0) { /* First encoder */
+    if (clockwise) {
+      top_encoder_cw();
+    } else {
+      top_encoder_ccw();
+    }
+  } else if (index == 1) { /* Second encoder */
+    if (clockwise) {
+      bot_encoder_cw();
+    } else {
+      bot_encoder_ccw();
+    }
+  }
+}
 
 // -------- Macros ------------
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -207,6 +379,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 };
 
+// ----------- Tap Dance routines ---------------------
+
+// Tap Dance: Single = Bspc, Hold = Numpad
+// Holding key while numpad locked should access QWERTY layer
+static uint8_t tap = 0;
+
+void del_num_finished(qk_tap_dance_state_t *state, void *user_data) {
+    tap = cur_dance(state);
+    switch (tap) {
+      case SINGLE_HOLD: layer_invert(_NUMPAD); break;
+      case DOUBLE_HOLD: register_code(KC_DEL); break;
+      default: tap_code(KC_DEL);
+    }
+}
+
+void del_num_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (tap) {
+      case SINGLE_HOLD: layer_invert(_NUMPAD); break;
+      case DOUBLE_HOLD: unregister_code(KC_DEL); break;
+    }
+    tap = 0;
+}
+
+// Define tap dance actions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [DEL_NUM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, del_num_finished, del_num_reset),
+};
+
 // ---------- Tapping Terms ------------------
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -222,6 +422,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       return TAPPING_TERM + 20;
     case SPC_NAV:
       return TAPPING_TERM + 20;
+    case CTL_E:
+      return TAPPING_TERM + 60;
     default:
       return TAPPING_TERM;
   }

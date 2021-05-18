@@ -1,6 +1,6 @@
 #pragma once
 
-#define TAPPING_TERM 170
+#define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 
 // Prevent normal rollover on alphas from accidentally triggering mods

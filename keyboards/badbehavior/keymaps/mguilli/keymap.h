@@ -3,6 +3,7 @@
 // Custom Layers
 enum custom_layers {
   _QWERTY,
+  _COLEMAK_DH,
   _NAV,
   _NUMPAD,
   _SYMBOL,
@@ -25,17 +26,38 @@ enum custom_layers {
 #define U_CUT C(KC_X)
 #define U_UNDO C(KC_Z)
 
-// Left-hand home row mods
+// Qwerty Left-hand home row mods
 #define GUI_A LGUI_T(KC_A)
 #define ALT_S LALT_T(KC_S)
 #define CTL_D LCTL_T(KC_D)
 #define SFT_F LSFT_T(KC_F)
 
-// Right-hand home row mods
+// Qwerty Right-hand home row mods
 #define SFT_J RSFT_T(KC_J)
 #define CTL_K RCTL_T(KC_K)
 #define ALT_L LALT_T(KC_L)
 #define GUI_SC LGUI_T(KC_SCLN)
+
+// Colemak Left-hand home row mods
+#define ALT_R LALT_T(KC_R)
+#define CTL_S LCTL_T(KC_S)
+#define SHFT_T LSFT_T(KC_T)
+
+// Colemak Right-hand home row mods
+#define SFT_N RSFT_T(KC_N)
+#define CTL_E RCTL_T(KC_E)
+#define ALT_I LALT_T(KC_I)
+#define GUI_O LGUI_T(KC_O)
+
+// Encoder modes
+enum encoder_modes {
+  FIRST,
+  BROWSER,
+  VIMSCR,
+  MEDIA,
+  MSWORD,
+  LAST
+};
 
 // Macros
 enum custom_keycodes {
