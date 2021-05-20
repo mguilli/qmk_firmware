@@ -411,7 +411,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case DEL_NUM:
-      return TAPPING_TERM - 40;
+      return TAPPING_TERM - 60;
     case GUI_A:
       return TAPPING_TERM + 60;
     case GUI_SC:
