@@ -1,4 +1,3 @@
-*.vim
 .history/
 .dep
 *.o
