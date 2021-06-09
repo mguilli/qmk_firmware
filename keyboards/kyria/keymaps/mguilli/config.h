@@ -11,6 +11,7 @@
 // This prevents short hold periods to be interpretedas individual taps when typing quickly
 #define PERMISSIVE_HOLD
 
+#define LEADER_TIMEOUT 300
 
 #ifdef OLED_DRIVER_ENABLE
   #define OLED_DISPLAY_128X64
@@ -37,3 +38,18 @@
 
 #define ENCODER_RESOLUTION 2
 #define ENCODER_DIRECTION_FLIP
+
+#define COMBO_VARIABLE_LEN
+#define COMBO_TERM 35
+//#define COMBO_COUNT 3
+
+// Disabling to reduce firmware size
+#define NO_ACTION_ONESHOT
+
+// disable if not debugging
+#ifndef NO_DEBUG
+#define NO_DEBUG
+#endif // !NO_DEBUG
+#if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+#define NO_PRINT
+#endif // !NO_PRINT

@@ -1,123 +1,59 @@
 #include QMK_KEYBOARD_H
 #include "keymap.h"
+#include "g/keymap_combo.h"
+#include "secrets.h"
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* QWERTY
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   -    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctl/Esc |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  |  Del | Del  |  |CtlEsc|NumLok|   N  |   M  | ,  < | . >  | /  ? | RShift |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | Left | GUI  | Tab  | Bspc |Numpad|  | Enter| Space| Tab  |Adjust| Right|
- *                        | Encod|      |Numpad|Symbol|      |  |      | Nav  |      |      | Encod|
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_QWERTY] = LAYOUT(
-      KC_GRV,   KC_Q,    KC_W,    KC_E,     KC_R,    KC_T,                                               KC_Y,   KC_U,        KC_I,    KC_O,   KC_P,    KC_MINS,
-      ESC_CTL,  GUI_A,   ALT_S,   CTL_D,    SFT_F,   KC_G,                                               KC_H,   SFT_J,       CTL_K,   ALT_L,  KC_SCLN, KC_QUOT,
-      KC_LSFT,  KC_Z,    KC_X,    KC_C,     KC_V,    KC_B,    KC_DEL,  KC_DEL,      CTL_TAB, TG(_NUMPAD), KC_N,   KC_M,        KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
-                                  LEFT_ENC, KC_LGUI, NUM_TAB, BSP_SYM, MO(_NUMPAD), KC_ENT,  SPC_NAV,     KC_TAB, MO(_ADJUST), RIGHT_ENC
-    ),
 
-/* Colemak-DH
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |   Q  |   W  |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |   ;  |   -    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctl/Esc |   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  |  ' "   |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   D  |   V  |  Del | Del  |  |CtlEsc|NumLok|   K  |   H  | ,  < | . >  | /  ? | RShift |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | Left | GUI  | Tab  | Bspc |Numpad|  | Enter| Space| Tab  |Adjust| Right|
- *                        | Encod|      |Numpad|Symbol|      |  |      | Nav  |      |      | Encod|
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_COLEMAK_DH] = LAYOUT(
-      KC_GRV,  KC_Q,  KC_W,  KC_F,     KC_P,    KC_B,                                               KC_J,    KC_L,        KC_U,    KC_Y,   KC_SCLN, KC_MINS,
-      ESC_CTL, GUI_A, ALT_R, CTL_S,    SHFT_T,  KC_G,                                               KC_M,    SFT_N,       CTL_E,   ALT_I,  KC_O,    KC_QUOT,
-      KC_LSFT, KC_Z,  KC_X,  KC_C,     KC_D,    KC_V,    KC_DEL,  KC_DEL,      CTL_TAB, TG(_NUMPAD), KC_K,    KC_H,        KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
-                             LEFT_ENC, KC_LGUI, NUM_TAB, BSP_SYM, MO(_NUMPAD), KC_ENT,  SPC_NAV,     KC_TAB,  MO(_ADJUST), RIGHT_ENC
-    ),
+  [_QWERTY] = LAYOUT(
+      KC_GRV,  KC_Q,  KC_W,  KC_E,     KC_R,    KC_T,                                       KC_Y,     KC_U,   KC_I,    KC_O,   KC_P,    KC_MINS,
+      ESC_CTL, GUI_A, ALT_S, CTL_D,    SFT_F,   KC_G,                                       KC_H,     SFT_J,  CTL_K,   ALT_L,  KC_SCLN, KC_QUOT,
+      ALT_TAB, KC_Z,  KC_X,  KC_C,     KC_V,    KC_B,    KC_LSFT, KC_DEL, NUMLOCK, KC_TAB,  KC_N,     KC_M,   KC_COMM, KC_DOT, KC_SLSH, KC_LEAD,
+                             LEFT_ENC, KC_LGUI, NUMWORD, BSP_SYM, KC_ENT, KC_ENT,  SPC_NAV, CAPSWORD, ADJUST, RIGHT_ENC
+      ),
 
-/* Nav
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |   1  |  2   |  3   |  4   |  5   |                              |  6   |  7   |  8   |  9   |  0   |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |                              | Left | Down | Up   | Right|      |  Caps  |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |  6   |  7   |  8   |  9   |  0   | Cut  | Redo |  |      |      | Home | PgDn | PgUp | End  |      |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      | Paste| Copy |      | Undo |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
+  [_NORMAN] = LAYOUT(
+      KC_GRV,  KC_Q,  KC_W,  KC_D,     KC_F,    KC_K,                                       KC_J,     KC_U,   KC_R,    KC_L,   KC_SCLN, KC_MINS,
+      ESC_CTL, GUI_A, ALT_S, CTL_E,    SHFT_T,  KC_G,                                       KC_Y,     SFT_N,  CTL_I,   ALT_O,  KC_H,    KC_QUOT,
+      ALT_TAB, KC_Z,  KC_X,  KC_C,     KC_V,    KC_B,    KC_LSFT, KC_DEL, NUMLOCK, KC_TAB,  KC_P,     KC_M,   KC_COMM, KC_DOT, KC_SLSH, XXXXXXX,
+                             LEFT_ENC, KC_LGUI, NUMWORD, BSP_SYM, KC_ENT, KC_ENT,  SPC_NAV, CAPSWORD, ADJUST, RIGHT_ENC
+      ),
 
-    [_NAV] = LAYOUT(
-      _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-      _______, _______, _______, _______, _______, _______,                                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, KC_CAPS,
-      _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    U_CUT,   U_REDO, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
-                                 _______, U_PASTE, U_COPY,  _______, U_UNDO, _______, _______, _______, _______, _______
-    ),
+  [_NAV] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     SGUI(KC_LEFT), SGUI(KC_DOWN), SGUI(KC_UP), SGUI(KC_RGHT), _______, _______,
+      _______, _______, _______, _______, _______, _______,                                     KC_LEFT,       KC_DOWN,       KC_UP,       KC_RGHT,       _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME,       KC_PGDN,       KC_PGUP,     KC_END,        _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______,       _______,       _______
+      ),
 
-/* Numpad
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |  Up  |      |      |                              |      |  7   |  8   |  9   |  -   |   /    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      | Left | Down | Rght |      |                              |      |  4   |  5   |  6   |  +   |   *    |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |      |      |      |  1   |  2   |  3   |  .   |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |  0   |  0   |  .   |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-
-    [_NUMPAD] = LAYOUT(
-      _______, XXXXXXX, XXXXXXX, KC_UP,   XXXXXXX, XXXXXXX,                                     XXXXXXX, KC_7,   KC_8, KC_9, KC_MINS, KC_SLSH,
-      _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX,                                     XXXXXXX, KC_4,   KC_5, KC_6, KC_PLUS, KC_ASTR,
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, XXXXXXX, KC_1,   KC_2, KC_3, KC_DOT,  XXXXXXX,
+  [_NUMPAD] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, KC_7,   KC_8, KC_9, KC_MINS, KC_SLSH,
+      _______, _______, _______, _______, _______, _______,                                     _______, KC_4,   KC_5, KC_6, KC_PLUS, KC_ASTR,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_1,   KC_2, KC_3, KC_DOT,  _______,
                                  _______, _______, _______, _______, _______, _______, KC_0,    KC_0,    KC_DOT, _______
-    ),
+      ),
 
-/* Symbol
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |   ~    |  !   |  @   |  {   |  }   |  {}  |                              |  ||  |  _   |  |   |  `   |  \   |  ""    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  #   |  $   |  (   |  )   |  ()  |                              |   +  |  -   |  &   |  *   |  %   |   "    |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |  %   |  ^   |  [   |  ]   |  []  |      |      |  |      |      |   &  |  =   |  ,   |  .   |  / ? |  ''    |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |  =   |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
+  [_NUMBER] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, KC_6,    KC_4,    KC_0,    KC_2,    KC_PLUS,                                     KC_EQL,  KC_3,    KC_1,    KC_5,    KC_7,    _______,
+      _______, _______, _______, _______, KC_8,    _______, _______, _______, _______, _______, _______, KC_9,    _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      ),
 
-    [_SYMBOL] = LAYOUT(
+  [_SYMBOL] = LAYOUT(
       KC_TILD, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, DBL_CBR,                                     DBL_PIP, KC_UNDS, KC_PIPE, KC_GRV,  KC_BSLS, DBL_DQT,
       _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, DBL_PRN,                                     KC_PLUS, KC_MINS, KC_AMPR, KC_ASTR, KC_COLN, KC_DQUO,
       _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, DBL_BRC, _______, _______, _______, _______, DBL_ARR, KC_EQL,  KC_LT,   KC_GT,   KC_QUES, DBL_SQT,
-                                 _______, _______, _______, _______, _______, KC_EQL,  _______, _______, _______, _______
-    ),
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      ),
 
-/* Adjust
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              |      | F7   |  F8  | F9   | F12  |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        | TOG  | SAI  | HUI  | VAI  | MOD  |                              |      | F4   |  F5  | F6   | F11  |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      | SAD  | HUD  | VAD  | RMOD |VimScr|Media |  |      |      |      | F1   |  F2  | F3   | F10  | Sleep  |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |Colmak|Qwerty|Browse|MSWord|  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_ADJUST] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                       _______, KC_F7,   KC_F8, KC_F9, KC_F12, _______,
-      _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                       _______, KC_F4,   KC_F5, KC_F6, KC_F11, _______,
-      _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, E_VIMSCR, E_MEDIA, _______, _______, _______, KC_F1,   KC_F2, KC_F3, KC_F10, KC_SLEP,
-                                 _______, COLEMAK, QWERTY,   E_BROWS,  E_WORD,  _______, _______, _______, _______, _______
-    ),
+  [_ADJUST] = LAYOUT(
+      CMB_TOG, _______, _______, _______, _______, _______,                                      _______, KC_F7,   KC_F8, KC_F9, KC_F12, _______,
+      _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                      _______, KC_F4,   KC_F5, KC_F6, KC_F11, _______,
+      _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______, _______, _______, _______, _______, KC_F1,   KC_F2, KC_F3, KC_F10, KC_SLEP,
+                                 _______, NORMAN,  QWERTY,   _______, _______, _______, _______, _______, _______, _______
+      )
 
 /* Blank
  * ,-------------------------------------------.                              ,-------------------------------------------.
@@ -335,8 +271,8 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("\nLayer: "), false);
     switch (get_highest_layer(layer_state | default_layer_state)) {
-        case _COLEMAK_DH:
-            oled_write_P(PSTR("Colemak\n"), false);
+        case _NORMAN:
+            oled_write_P(PSTR("Norman\n"), false);
             break;
         case _QWERTY:
             oled_write_P(PSTR("Qwerty\n"), false);
@@ -346,6 +282,9 @@ static void render_status(void) {
             break;
         case _NUMPAD:
             oled_write_P(PSTR("Numpad\n"), false);
+            break;
+        case _NUMBER:
+            oled_write_P(PSTR("Numbers\n"), false);
             break;
         case _SYMBOL:
             oled_write_P(PSTR("Symbol\n"), false);
@@ -376,6 +315,13 @@ static void render_status(void) {
         oled_write_P(PSTR("Undefined\n"), false);
     }
 
+    oled_write_P(PSTR("Combos: "), false);
+    if (is_combo_enabled()) {
+      oled_write_P(PSTR("on\n"), false);
+    } else {
+      oled_write_P(PSTR("off\n"), false);
+    }
+
     // Host Keyboard LED Status
     uint8_t led_usb_state = host_keyboard_leds();
     oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK) ? PSTR("NUMLCK ") : PSTR("       "), false);
@@ -394,17 +340,160 @@ void oled_task_user(void) {
 #endif
 
 // -------- Macros ------------
+bool process_record_secrets(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case SEC_0 ... SEC_LAST:
+      if (record->event.pressed) {
+        send_string(secrets[keycode - SEC_0]);
+      }
+      return false;
+      break;
+  }
+  return true;
+}
+
+bool process_leader_secrets(uint16_t keycode) {
+  switch (keycode) {
+    case SEC_0 ... SEC_LAST:
+      send_string(secrets[keycode - SEC_0]);
+      return false;
+      break;
+  }
+  return true;
+}
+
+static bool numword_on = false;
+static bool capsword_on = false;
+
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+
+void num_word_enable(void) {
+  numword_on = true;
+  layer_on(_NUMBER);
+}
+
+void num_word_disable(void) {
+  numword_on = false;
+  layer_off(_NUMBER);
+}
+
+// CAPS_WORD: A "smart" Caps Lock key that only capitalizes the next identifier you type
+// and then toggles off Caps Lock automatically when you're done.
+void caps_word_enable(void) {
+    capsword_on = true;
+    if (!(host_keyboard_led_state().caps_lock)) {
+        tap_code(KC_CAPS);
+    }
+}
+
+void caps_word_disable(void) {
+    capsword_on = false;
+    if (host_keyboard_led_state().caps_lock) {
+        tap_code(KC_CAPS);
+    }
+}
+// Used to extract the basic tapping keycode from a dual-role key.
+// Example: GET_TAP_KC(MT(MOD_RSFT, KC_E)) == KC_E
+#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
+
+void process_smartcase(uint16_t keycode, keyrecord_t *record) {
+  if (capsword_on) {
+    switch (keycode) {
+      case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+        // Earlier return if this has not been considered tapped yet
+        if (record->tap.count == 0) { return; }
+        // Get the base tapping keycode of a mod- or layer-tap key
+        keycode = GET_TAP_KC(keycode);
+        break;
+      default:
+        break;
+    }
+  }
+
+  switch (keycode) {
+    // Keycodes to ignore (don't disable caps word)
+    case KC_A ... KC_Z:
+    case KC_1 ... KC_0:
+    case KC_PERC:
+    case KC_COMM:
+    case KC_DOT:
+    case KC_SLSH:
+    case KC_DLR:
+    case KC_MINS:
+    case KC_ASTR:
+    case KC_PLUS:
+    case KC_EQL:
+    case KC_UNDS:
+    case KC_BSPC:
+    case NUMWORD:
+    case BSP_SYM:
+      break;
+    default:
+      if (record->event.pressed) {
+        caps_word_disable();
+        num_word_disable();
+      }
+  }
+}
+
+void process_alt_tab(bool pressed) {
+  if (pressed) {
+    if (!is_alt_tab_active) {
+      is_alt_tab_active = true;
+      register_code(KC_LALT);
+    }
+    alt_tab_timer = timer_read();
+    register_code(KC_TAB);
+  } else {
+    unregister_code(KC_TAB);
+  }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  process_smartcase(keycode, record);
+
   switch(keycode) {
+    // Case functions
+    case NUMWORD:
+      if (record->event.pressed) {
+        if (numword_on) {
+          num_word_disable();
+          return false;
+        } else {
+          num_word_enable();
+          return false;
+        }
+      }
+      break;
+
+    case CAPSWORD:
+      // Toggle `capsword_on`
+      if (record->event.pressed) {
+        if (capsword_on) {
+          caps_word_disable();
+          return false;
+        } else {
+          caps_word_enable();
+          return false;
+        }
+      }
+      break;
+
+    // Super AltTab
+    case ALT_TAB:
+      process_alt_tab(record->event.pressed);
+      break;
+
     // Change default layer
     case QWERTY:
       if(record->event.pressed) {
         set_single_persistent_default_layer(_QWERTY);
       }
       break;
-    case COLEMAK:
+    case NORMAN:
       if(record->event.pressed) {
-        set_single_persistent_default_layer(_COLEMAK_DH);
+        set_single_persistent_default_layer(_NORMAN);
       }
       break;
 
@@ -418,20 +507,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         right_encoder_pressed();
       }
-      break;
-
-    // Change encoder functionality
-    case E_BROWS:
-      enc_mode = BROWSER;
-      break;
-    case E_MEDIA:
-      enc_mode = MEDIA;
-      break;
-    case E_WORD:
-      enc_mode = MSWORD;
-      break;
-    case E_VIMSCR:
-      enc_mode = VIMSCR;
       break;
 
     // Surround Macros
@@ -479,8 +554,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case GUI_A:
       return TAPPING_TERM + 60;
-    case GUI_SC:
-      return TAPPING_TERM + 60;
     case ALT_S:
       return TAPPING_TERM + 20;
     case ALT_L:
@@ -491,5 +564,37 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       return TAPPING_TERM + 60;
     default:
       return TAPPING_TERM;
+  }
+}
+
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+  if (is_alt_tab_active) {
+    if (timer_elapsed(alt_tab_timer) > 1000) {
+      unregister_code(KC_LALT);
+      is_alt_tab_active = false;
+    }
+  }
+
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+
+    // email
+    SEQ_ONE_KEY(KC_E) {
+      process_leader_secrets(SEC_0);
+    }
+
+    // password
+    SEQ_ONE_KEY(KC_R) {
+      process_leader_secrets(SEC_1);
+    }
+
+    // user name
+    SEQ_ONE_KEY(KC_T) {
+      process_leader_secrets(SEC_2);
+    }
+
   }
 }

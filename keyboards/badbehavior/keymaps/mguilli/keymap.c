@@ -294,7 +294,7 @@ void bot_encoder_ccw(void) {
 }
 
 // Update encoders
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) { /* First encoder */
     if (clockwise) {
       top_encoder_cw();
@@ -308,6 +308,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
       bot_encoder_ccw();
     }
   }
+  return true;
 }
 
 // -------- Macros ------------

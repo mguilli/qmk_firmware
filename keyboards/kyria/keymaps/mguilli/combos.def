@@ -1,0 +1,17 @@
+// Navigation combos
+COMB(erTab,    KC_TAB,                 KC_E, KC_R)
+COMB(dfTab,    KC_TAB,                 KC_D, KC_F) // Norman
+SUBS(rtCtlTab, SS_LCTL(SS_TAP(X_TAB)), KC_R, KC_T)
+SUBS(fkCtlTab, SS_LCTL(SS_TAP(X_TAB)), KC_F, KC_K) // Norman
+
+// Alt tab custom macro through inject.h
+SUBS(weAltTab, "",                     KC_W, KC_E)
+SUBS(wdAltTab, "",                     KC_W, KC_D) // Norman
+
+// Utility combos
+COMB(zxUndo, U_UNDO, KC_Z, KC_X)
+COMB(xcCopy, U_COPY, KC_X, KC_C)
+COMB(xvCut, U_CUT, KC_X, KC_V)
+COMB(cvPaste, U_PASTE, KC_C, KC_V)
+COMB(vbRedo, U_REDO, KC_V, KC_B)
+
