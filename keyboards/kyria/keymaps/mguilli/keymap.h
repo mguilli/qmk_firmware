@@ -1,4 +1,6 @@
 # include QMK_KEYBOARD_H
+# include "oled_stuff.h"
+# include "encoder_stuff.h"
 
 // Custom Layers
 enum custom_layers {
@@ -45,16 +47,6 @@ enum custom_layers {
 #define CTL_I LCTL_T(KC_I)
 #define ALT_O LALT_T(KC_O)
 
-// Encoder modes
-enum encoder_modes {
-  FIRST,
-  BROWSER,
-  VIMSCR,
-  MEDIA,
-  MSWORD,
-  LAST
-};
-
 // Macros
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -62,10 +54,6 @@ enum custom_keycodes {
   NUMWORD,
   CAPSWORD,
   ALT_TAB,
-
-  // Encoders
-  RIGHT_ENC,
-  LEFT_ENC,
 
   // Surround Macros, where _ is the cursor
   DBL_BRC,  // [_]

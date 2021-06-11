@@ -21,3 +21,6 @@ SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no
 AUTO_SHIFT_ENABLE = no
 KEY_LOCK_ENABLE = no
+
+SRC += oled_stuff.c
+SRC += encoder_stuff.c
