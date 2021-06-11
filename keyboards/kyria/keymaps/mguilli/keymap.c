@@ -1,7 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "keymap.h"
 #include "g/keymap_combo.h"
-#include "secrets.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -69,25 +68,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // -------- Macros ------------
+__attribute__ ((weak))
 bool process_record_secrets(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case SEC_0 ... SEC_LAST:
-      if (record->event.pressed) {
-        send_string(secrets[keycode - SEC_0]);
-      }
-      return false;
-      break;
-  }
   return true;
 }
 
+__attribute__ ((weak))
 bool process_leader_secrets(uint16_t keycode) {
-  switch (keycode) {
-    case SEC_0 ... SEC_LAST:
-      send_string(secrets[keycode - SEC_0]);
-      return false;
-      break;
-  }
   return true;
 }
 
@@ -275,7 +262,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
   }
-  return true;
+  return process_record_secrets(keycode, record);
 };
 
 // ---------- Tapping Terms ------------------

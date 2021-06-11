@@ -24,3 +24,4 @@ KEY_LOCK_ENABLE = no
 
 SRC += oled_stuff.c
 SRC += encoder_stuff.c
+SRC += secrets.c
