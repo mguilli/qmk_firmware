@@ -1,6 +1,7 @@
 # include QMK_KEYBOARD_H
 # include "oled_stuff.h"
 # include "encoder_stuff.h"
+# include "smartcase.h"
 
 // Custom Layers
 enum custom_layers {
