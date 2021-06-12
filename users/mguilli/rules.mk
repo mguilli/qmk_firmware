@@ -22,6 +22,8 @@ GRAVE_ESC_ENABLE = no
 AUTO_SHIFT_ENABLE = no
 KEY_LOCK_ENABLE = no
 
+
+SRC += mguilli.c
 SRC += oled_stuff.c
 SRC += encoder_stuff.c
 SRC += secrets.c
