@@ -26,3 +26,4 @@ SRC += oled_stuff.c
 SRC += encoder_stuff.c
 SRC += secrets.c
 SRC += smartcase.c
+SRC += process_record.c
