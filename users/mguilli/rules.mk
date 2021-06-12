@@ -1,3 +1,5 @@
+VPATH += keyboards/gboards
+
 OLED_DRIVER_ENABLE = yes   # Enables the use of OLED displays
 ENCODER_ENABLE = yes       # Enables the use of one or more encoders
 RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
@@ -19,3 +21,9 @@ SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no
 AUTO_SHIFT_ENABLE = no
 KEY_LOCK_ENABLE = no
+
+SRC += oled_stuff.c
+SRC += encoder_stuff.c
+SRC += secrets.c
+SRC += smartcase.c
+SRC += process_record.c

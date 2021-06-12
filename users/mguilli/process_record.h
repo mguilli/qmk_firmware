@@ -62,3 +62,5 @@ enum secrets {
 
 bool process_record_secrets(uint16_t keycode, keyrecord_t *record);
 bool process_leader_secrets(uint16_t keycode);
+
+void process_alt_tab(bool pressed);
