@@ -1,20 +1,45 @@
 #include QMK_KEYBOARD_H
 #include "mguilli.h"
 
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+#define NUMBERS MO(_NUMBER)
 
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+/* Qwerty
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |   `    |  q   |  w   |  e   |  r   |  t   |                              |  y   |  u   |  i   |  o   |  p   |   -    |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * | Esc/Ctl|  a   |  s   |  d   |  f   |  g   |                              |  h   |  j   |  k   |  l   |  ;   |   '    |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | AltTab |  z   |  x   |  c   |  v   |  b   | Tab  | Del  |  |NumWrd| Lead |  n   |  m   |  ,   |  .   |  /   | NUMLOCK|
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |Minor | GUI  |Number|BackSp|Enter |  |Enter | Space|CapsWd|Adjust|Major |
+ *                        |Encode|      |Layer |Symbol|      |  |      | Nav  |      |      |Encode|
+ *                        `----------------------------------'  `----------------------------------'
+ */
   [_QWERTY] = LAYOUT(
       KC_GRV,  KC_Q,  KC_W,  KC_E,      KC_R,    KC_T,                                        KC_Y,     KC_U,   KC_I,    KC_O,   KC_P,    KC_MINS,
       ESC_CTL, GUI_A, ALT_S, CTL_D,     SFT_F,   KC_G,                                        KC_H,     SFT_J,  CTL_K,   ALT_L,  KC_SCLN, KC_QUOT,
-      ALT_TAB, KC_Z,  KC_X,  KC_C,      KC_V,    KC_B,    KC_TAB,  KC_DEL, CTL_TAB, KC_LEAD,  KC_N,     KC_M,   KC_COMM, KC_DOT, KC_SLSH, NUMLOCK,
-                             MINOR_ENC, KC_LGUI, NUMWORD, LFT_SPC, KC_ENT, KC_ENT,  RGHT_SPC, CAPSWORD, ADJUST, MAJOR_ENC
+      ALT_TAB, KC_Z,  KC_X,  KC_C,      KC_V,    KC_B,    KC_TAB,  KC_DEL, NUMWORD, KC_LEAD,  KC_N,     KC_M,   KC_COMM, KC_DOT, KC_SLSH, NUMLOCK,
+                             MINOR_ENC, KC_LGUI, NUMBERS, LFT_SPC, KC_ENT, KC_ENT,  RGHT_SPC, CAPSWORD, ADJUST, MAJOR_ENC
       ),
 
-  [_NORMAN] = LAYOUT(
-      KC_GRV,  KC_Q,  KC_W,  KC_D,      KC_F,    KC_K,                                        KC_J,     KC_U,   KC_R,    KC_L,   KC_SCLN, KC_MINS,
-      ESC_CTL, GUI_A, ALT_S, CTL_E,     SHFT_T,  KC_G,                                        KC_Y,     SFT_N,  CTL_I,   ALT_O,  KC_H,    KC_QUOT,
-      ALT_TAB, KC_Z,  KC_X,  KC_C,      KC_V,    KC_B,    KC_TAB,  KC_DEL, CTL_TAB, KC_LEAD,  KC_P,     KC_M,   KC_COMM, KC_DOT, KC_SLSH, NUMLOCK,
-                             MINOR_ENC, KC_LGUI, NUMWORD, LFT_SPC, KC_ENT, KC_ENT,  RGHT_SPC, CAPSWORD, ADJUST, MAJOR_ENC
+/* Colemak Mod-DH
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |   `    |  q   |  w   |  f   |  p   |  b   |                              |  j   |  l   |  u   |  y   |  ;   |   -    |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * | Esc/Ctl|  a   |  r   |  s   |  t   |  g   |                              |  m   |  n   |  e   |  i   |  o   |   '    |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | AltTab |  z   |  x   |  c   |  d   |  v   | Tab  | Del  |  |NumWrd| Lead |  k   |  h   |  ,   |  .   |  /   | NUMLOCK|
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |Minor | GUI  |Number|BackSp|Enter |  |Enter | Space|CapsWd|Adjust|Major |
+ *                        |Encode|      |Layer |Symbol|      |  |      | Nav  |      |      |Encode|
+ *                        `----------------------------------'  `----------------------------------'
+ */
+  [_COLEMAK] = LAYOUT(
+      KC_GRV,  KC_Q,  KC_W,  KC_F,      KC_P,    KC_B,                                        KC_J,     KC_L,   KC_U,    KC_Y,   KC_SCLN, KC_MINS,
+      ESC_CTL, GUI_A, ALT_R, CTL_S,     SHFT_T,  KC_G,                                        KC_M,     SFT_N,  CTL_E,   ALT_I,  KC_O,    KC_QUOT,
+      ALT_TAB, KC_Z,  KC_X,  KC_C,      KC_D,    KC_V,    KC_TAB,  KC_DEL, NUMWORD, KC_LEAD,  KC_K,     KC_H,   KC_COMM, KC_DOT, KC_SLSH, NUMLOCK,
+                             MINOR_ENC, KC_LGUI, NUMBERS, LFT_SPC, KC_ENT, KC_ENT,  RGHT_SPC, CAPSWORD, ADJUST, MAJOR_ENC
       ),
 
   [_NAV] = LAYOUT(
@@ -49,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       CMB_TOG, _______, _______, _______, _______, _______,                                      _______, KC_F7,   KC_F8, KC_F9, KC_F12, _______,
       _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                      _______, KC_F4,   KC_F5, KC_F6, KC_F11, _______,
       _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______, _______, _______, _______, _______, KC_F1,   KC_F2, KC_F3, KC_F10, KC_SLEP,
-                                 _______, NORMAN,  QWERTY,   _______, _______, _______, _______, _______, _______, _______
+                                 _______, COLEMAK,  QWERTY,   _______, _______, _______, _______, _______, _______, _______
       )
 
 /* Blank

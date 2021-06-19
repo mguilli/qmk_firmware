@@ -213,8 +213,8 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("\nLayer: "), false);
     switch (get_highest_layer(layer_state | default_layer_state)) {
-        case _NORMAN:
-            oled_write_P(PSTR("Norman\n"), false);
+        case _COLEMAK:
+            oled_write_P(PSTR("Colemak\n"), false);
             break;
         case _QWERTY:
             oled_write_P(PSTR("Qwerty\n"), false);
@@ -440,9 +440,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         set_single_persistent_default_layer(_QWERTY);
       }
       break;
-    case NORMAN:
+    case COLEMAK:
       if(record->event.pressed) {
-        set_single_persistent_default_layer(_NORMAN);
+        set_single_persistent_default_layer(_COLEMAK);
       }
       break;
 

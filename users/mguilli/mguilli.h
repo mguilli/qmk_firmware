@@ -4,7 +4,7 @@
 // Custom Layers
 enum custom_layers {
   _QWERTY = 0,
-  _NORMAN,
+  _COLEMAK,
   _NAV,
   _NUMPAD,
   _NUMBER,
@@ -42,14 +42,15 @@ enum custom_layers {
 #define CTL_K RCTL_T(KC_K)
 #define ALT_L LALT_T(KC_L)
 
-// NORMAN Left-hand home row mods
-#define CTL_E RCTL_T(KC_E)
+// Colemak Mod-dh Left-hand home row mods
+#define ALT_R LALT_T(KC_R)
+#define CTL_S LCTL_T(KC_S)
 #define SHFT_T LSFT_T(KC_T)
 
-// NORMAN Right-hand home row mods
+// Colemak Mod-dh Right-hand home row mods
 #define SFT_N RSFT_T(KC_N)
-#define CTL_I LCTL_T(KC_I)
-#define ALT_O LALT_T(KC_O)
+#define CTL_E RCTL_T(KC_E)
+#define ALT_I LALT_T(KC_I)
 
 #ifdef ENCODER_ENABLE
 // Encoder modes
@@ -66,7 +67,7 @@ enum encoder_modes {
 // Macros
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
-  NORMAN,
+  COLEMAK,
   NUMWORD,
   CAPSWORD,
   ALT_TAB,
