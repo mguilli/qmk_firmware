@@ -523,7 +523,7 @@ void matrix_scan_user(void) {
 
   // Alt-Tab timer
   if (is_alt_tab_active) {
-    if (timer_elapsed(alt_tab_timer) > 1000) {
+    if (timer_elapsed(alt_tab_timer) > 850) {
       unregister_code(KC_LALT);
       is_alt_tab_active = false;
     }
@@ -549,3 +549,16 @@ void matrix_scan_user(void) {
   }
 #endif
 }
+
+#ifdef COMBO_ENABLE
+void process_combo_user(uint16_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case weAltTab:
+      process_alt_tab(pressed);
+      break;
+    case wdAltTab:
+      process_alt_tab(pressed);
+      break;
+  }
+}
+#endif

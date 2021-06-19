@@ -107,4 +107,4 @@ enum custom_keycodes {
   DBL_DQT   // "_"
 };
 
-void process_alt_tab(bool pressed);
+void process_combo_user(uint16_t combo_index, bool pressed);
