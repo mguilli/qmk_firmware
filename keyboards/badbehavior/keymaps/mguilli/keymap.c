@@ -27,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX,     ADJUST, KC_LGUI, KC_LALT, XXXXXXX, LFT_SPC, DEL_NUM,   KC_ENT,    RGHT_SPC, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
       ),
 
-  /* Norman
+  /* Colemak Mod-DH
    * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
    * │  `   │   1  │   2  │   3  │   4  │   5  │CtlTab│      │  =   │   6  │   7  │   8  │   9  │   0  │  -   │
    * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
@@ -41,12 +41,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * └──────┴──────┴──────┴──────┴─────────────┴──────┘      └──────┴─────────────┴──────┴──────┴──────┴──────┘
    */
 
-  [_NORMAN] = LAYOUT( \
+  [_COLEMAK] = LAYOUT( \
       KC_GRV,      KC_1,   KC_2,    KC_3,    KC_4,    KC_5,    C(KC_TAB), KC_EQL,    KC_6,     KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, \
-      KC_TAB,      KC_Q,   KC_W,    KC_D,    KC_F,    KC_K,    KC_LPRN,   KC_RPRN,   KC_J,     KC_U,    KC_R,    KC_L,    KC_SCLN, KC_BSLS, \
-      ESC_CTL,     GUI_A,  ALT_S,   CTL_E,   SHFT_T,  KC_G,    MAJOR_ENC, MINOR_ENC, KC_Y,     SFT_N,   CTL_I,   ALT_O,   KC_H,    KC_QUOT, \
-      MO(_NUMPAD), KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    CAPSWORD,  KC_LEAD,   KC_P,     KC_M,    KC_COMM, KC_DOT,  KC_SLSH, NUMLOCK, \
-      XXXXXXX,     ADJUST, KC_LGUI, KC_LALT, XXXXXXX, LFT_SPC, KC_DEL,    KC_ENT,    RGHT_SPC, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
+      KC_TAB,      KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,    KC_LPRN,   KC_RPRN,   KC_J,     KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS, \
+      ESC_CTL,     GUI_A,  ALT_R,   CTL_S,   SHFT_T,  KC_G,    MAJOR_ENC, MINOR_ENC, KC_M,     SFT_N,   CTL_E,   ALT_I,   KC_O,    KC_QUOT, \
+      MO(_NUMPAD), KC_Z,   KC_X,    KC_C,    KC_D,    KC_V,    CAPSWORD,  KC_LEAD,   KC_K,     KC_H,    KC_COMM, KC_DOT,  KC_SLSH, NUMLOCK, \
+      XXXXXXX,     ADJUST, KC_LGUI, KC_LALT, XXXXXXX, LFT_SPC, DEL_NUM,   KC_ENT,    RGHT_SPC, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
       ),
 
   /* Nav
@@ -120,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐      ┌──────┬──────┬──────┬──────┬──────┬──────┬──────┐
    * │      │      │      │      │      │      │      │      │      │MsWord│  F10 │  F11 │  F12 │      │PrnScr│
    * ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
-   * │      │ Reset│      │      │      │      │      │      │Norman│Media │  F7  │  F8  │  F9  │      │ScrLck│
+   * │      │ Reset│      │      │      │      │      │      │COLMAK│Media │  F7  │  F8  │  F9  │      │ScrLck│
    * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C7*│      ├──────┼──────┼──────┼──────┼──────┼──────┤
    * │      │      │      │      │      │      ├──────┼──────┼──────┤VimScr│  F4  │  F5  │  F6  │      │Pause │
    * ├──────┼──────┼──────┼──────┼──────┼──────┤      │*R2C6*│Qwerty├──────┼──────┼──────┼──────┼──────┼──────┤
@@ -132,7 +132,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT( \
       _______, _______, _______, _______, _______, _______, _______, _______, E_MSWORD, KC_F10,  KC_F11,  KC_F12,  _______, KC_PSCR, \
-      _______, RESET,   _______, _______, _______, _______, _______, NORMAN,  E_MEDIA,  KC_F7,   KC_F8,   KC_F9,   _______, KC_SLCK, \
+      _______, RESET,   _______, _______, _______, _______, _______, COLEMAK,  E_MEDIA,  KC_F7,   KC_F8,   KC_F9,   _______, KC_SLCK, \
       _______, _______, _______, _______, _______, _______, _______, _______, E_VIMSCR, KC_F4,   KC_F5,   KC_F6,   _______, KC_PAUS, \
       _______, _______, _______, _______, _______, _______, _______, QWERTY,  E_BROWSE, KC_F1,   KC_F2,   KC_F3,   _______, KC_SLEP, \
       _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______,  XXXXXXX, _______, _______, _______, _______  \
