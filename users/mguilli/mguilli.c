@@ -374,13 +374,17 @@ void process_smartcase(uint16_t keycode, keyrecord_t *record) {
       break;
     case KC_A ... KC_Z:
       if (record->event.pressed) {
-        num_word_disable();
+        if (numword_on) {
+          num_word_disable();
+        }
       }
       break;
     default:
       if (record->event.pressed) {
         caps_word_disable();
-        num_word_disable();
+        if (numword_on) {
+          num_word_disable();
+        }
       }
   }
 }

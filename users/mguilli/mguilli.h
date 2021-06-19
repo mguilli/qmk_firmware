@@ -16,6 +16,7 @@ enum custom_layers {
 #define RGHT_SPC LT(_NAV, KC_SPC)
 #define ADJUST MO(_ADJUST)
 #define NUMLOCK TG(_NUMPAD)
+#define NUMBERS MO(_NUMBER)
 
 #define ESC_CTL CTL_T(KC_ESC)
 #define CTL_TAB C(KC_TAB)

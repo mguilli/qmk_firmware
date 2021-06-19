@@ -1,8 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "mguilli.h"
 
-#define NUMBERS MO(_NUMBER)
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
  * ,-------------------------------------------.                              ,-------------------------------------------.
